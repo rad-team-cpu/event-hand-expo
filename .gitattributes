@@ -1,1 +1,6 @@
 *.pbxproj -text
+*.js text eol=lf
+*.ts text eol=lf
+*.test.ts text eol=lf
+*.tsx text eol=lf
+*.test.tsx text eol=lf
