@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { BottomNavigation, Text, FAB } from 'react-native-paper';
 
-const MusicRoute = () => (
+const EventsRoute = () => (
   <FAB
     icon="plus"
     color="white"
     style={{
-      backgroundColor: '#4A43EC',
+      backgroundColor: '#3D50DF',
       position: 'absolute',
       margin: 16,
       right: 0,
@@ -16,7 +16,7 @@ const MusicRoute = () => (
   />
 );
 
-const AlbumsRoute = () => <Text>Chat</Text>;
+const ChatsRoute = () => <Text>Chat</Text>;
 
 const RecentsRoute = () => <Text>Favorites</Text>;
 
@@ -26,12 +26,12 @@ const BottomNavBar = () => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {
-      key: 'music',
+      key: 'events',
       title: 'Events',
       focusedIcon: 'calendar-check',
       unfocusedIcon: 'calendar-check',
     },
-    { key: 'albums', title: 'Chat', focusedIcon: 'chat' },
+    { key: 'chat', title: 'Chat', focusedIcon: 'chat' },
     { key: 'recents', title: 'Favorites', focusedIcon: 'heart' },
     {
       key: 'notifications',
@@ -42,8 +42,8 @@ const BottomNavBar = () => {
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    music: MusicRoute,
-    albums: AlbumsRoute,
+    events: EventsRoute,
+    chat: ChatsRoute,
     recents: RecentsRoute,
     notifications: NotificationsRoute,
   });
@@ -55,7 +55,7 @@ const BottomNavBar = () => {
       renderScene={renderScene}
       activeColor="black"
       inactiveColor="white"
-      barStyle={{ backgroundColor: '#4A43EC' }}
+      barStyle={{ backgroundColor: '#3D50DF' }}
     />
   );
 };
