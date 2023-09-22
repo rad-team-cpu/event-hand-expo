@@ -5,8 +5,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Checklist from '@/components/Checklist/Checklist';
 import { useTheme } from 'react-native-paper';
 
-
-
 const Home = () => {
   const theme = useTheme();
   return (
