@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@faker-js/faker": "^8.1.0",
     "@tsconfig/react-native": "^3.0.2",
     "@types/jest": "^29.5.4",
     "@types/react": "^18.2.21",
