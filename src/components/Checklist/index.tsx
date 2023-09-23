@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-import { SafeAreaProvider} from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 interface CheckboxProps {
   label: string;
@@ -35,13 +35,12 @@ function Checklist() {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingTop: 20
+    paddingTop: 20,
   },
   checkboxContainer: {
     flexDirection: 'row',
