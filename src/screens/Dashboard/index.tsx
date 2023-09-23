@@ -2,7 +2,7 @@ import React from 'react';
 import BottomNavBar from '@/components/BottomNavBar/BottomNavBar';
 import TopAppBar from '@/components/TopAppBar/TopAppBar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Checklist from '@/components/Checklist/Checklist';
+import Checklist from '@/components/Checklist';
 import { useTheme } from 'react-native-paper';
 
 const Dashboard = () => {

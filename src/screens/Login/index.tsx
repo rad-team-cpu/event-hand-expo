@@ -8,13 +8,9 @@ import TextInput from '../../components/TextInput';
 import BackButton from '../../components/BackButton';
 import { theme } from '../../core/theme';
 import { emailValidator, passwordValidator } from '../../core/utils';
-import { Navigation } from '../../types';
+import { LoginScreenProps } from '@/routes/types';
 
-type Props = {
-  navigation: Navigation;
-};
-
-const Login = ({ navigation }: Props) => {
+const Login = ({ navigation }: LoginScreenProps) => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
@@ -33,7 +29,7 @@ const Login = ({ navigation }: Props) => {
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('Welcome')} />
+      <BackButton goBack={() => navigation.goBack()} />
 
       <Logo />
 
@@ -62,9 +58,7 @@ const Login = ({ navigation }: Props) => {
       />
 
       <View style={styles.forgotPassword}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate('Welcome')}>
           <Text style={styles.label}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
@@ -75,7 +69,7 @@ const Login = ({ navigation }: Props) => {
 
       <View style={styles.row}>
         <Text style={styles.label}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Welcome')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>
