@@ -12,8 +12,16 @@ const Stack = createNativeStackNavigator<ScreenPropsList>();
 const Routes = () => (
   <NavigationContainer>
     <Stack.Navigator>
-      <Stack.Screen name="Welcome" component={Welcome} />
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen
+        name="Welcome"
+        component={Welcome}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}
