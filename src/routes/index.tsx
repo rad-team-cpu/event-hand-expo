@@ -6,6 +6,7 @@ import Welcome from '@/screens/Welcome';
 import Login from '@/screens/Login';
 import { ScreenPropsList } from './types';
 import TopAppBar from '@/components/TopAppBar/TopAppBar';
+import Checklist from '@/screens/Checklist';
 
 const Stack = createNativeStackNavigator<ScreenPropsList>();
 
@@ -27,6 +28,7 @@ const Routes = () => (
         component={Dashboard}
         options={{ header: TopAppBar }}
       />
+      <Stack.Screen name="Checklist" component={Checklist} />
     </Stack.Navigator>
   </NavigationContainer>
 );
