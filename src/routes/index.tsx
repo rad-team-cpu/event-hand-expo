@@ -5,6 +5,7 @@ import Dashboard from '@/screens/Dashboard';
 import Welcome from '@/screens/Welcome';
 import Login from '@/screens/Login';
 import { ScreenPropsList } from './types';
+import TopAppBar from '@/components/TopAppBar/TopAppBar';
 
 const Stack = createNativeStackNavigator<ScreenPropsList>();
 
@@ -13,7 +14,11 @@ const Routes = () => (
     <Stack.Navigator>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Dashboard" component={Dashboard} />
+      <Stack.Screen
+        name="Dashboard"
+        component={Dashboard}
+        options={{ header: TopAppBar }}
+      />
     </Stack.Navigator>
   </NavigationContainer>
 );
