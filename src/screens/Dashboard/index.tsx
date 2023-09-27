@@ -3,14 +3,14 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useTheme } from 'react-native-paper';
 import { DashboardScreenProps } from '@/routes/types';
-import { DashboardRoutes } from '@/routes';
+import DashboardNavbarRoutes from '@/routes/DashboardNavBar';
 
 const Dashboard = (props: DashboardScreenProps) => {
   const { navigation } = props;
   const theme = useTheme();
   return (
     <SafeAreaProvider style={{ backgroundColor: theme.colors.background }}>
-      <DashboardRoutes />
+      <DashboardNavbarRoutes />
     </SafeAreaProvider>
   );
 };
