@@ -12,11 +12,11 @@ import {
   passwordValidator,
   nameValidator,
 } from '../../core/utils';
-import { SignUpScreenProps } from '@/routes/types';
+import { SignupScreenProps } from '@/routes/types';
 
 
 
-const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
+const SignUpScreen = ({ navigation }: SignupScreenProps) => {
   const [name, setName] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
@@ -48,7 +48,7 @@ const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
         label="Name"
         returnKeyType="next"
         value={name.value}
-        onChangeText={text => setName({ value: text, error: '' })}
+        // onChangeText={text => setName({ value: text, error: '' })}
         error={!!name.error}
         errorText={name.error}
       />
@@ -57,7 +57,7 @@ const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
         label="Email"
         returnKeyType="next"
         value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
+        // onChangeText={text => setEmail({ value: text, error: '' })}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
@@ -69,7 +69,7 @@ const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
         label="Password"
         returnKeyType="done"
         value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
+        // onChangeText={text => setPassword({ value: text, error: '' })}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry

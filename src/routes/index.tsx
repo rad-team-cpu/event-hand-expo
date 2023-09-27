@@ -12,6 +12,7 @@ import EventList from '@/screens/EventList';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import Inbox from '@/screens/Inbox';
 import Notifications from '@/screens/Notifications';
+import Signup from '@/screens/Signup';
 
 
 const Stack = createNativeStackNavigator<ScreenPropsList>();
@@ -73,6 +74,11 @@ const Routes = () => (
       <Stack.Screen
         name="Login"
         component={Login}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
         options={{ headerShown: false }}
       />
       <Stack.Screen
