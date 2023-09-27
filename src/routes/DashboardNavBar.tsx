@@ -8,7 +8,7 @@ import Notifications from '@/screens/Notifications';
 
 const Tab = createMaterialBottomTabNavigator<DashboardTabScreenPropsList>();
 
-const DashboardRoutes = () => (
+const DashboardNavBarRoutes = () => (
   <Tab.Navigator
     shifting
     barStyle={{ backgroundColor: '#3D50DF' }}
@@ -51,3 +51,5 @@ const DashboardRoutes = () => (
     />
   </Tab.Navigator>
 );
+
+export default DashboardNavBarRoutes;
