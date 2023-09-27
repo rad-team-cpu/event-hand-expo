@@ -4,7 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Dashboard from '@/screens/Dashboard';
 import Welcome from '@/screens/Welcome';
 import Login from '@/screens/Login';
+import Signup from '@/screens/Signup';
 import { ScreenPropsList } from './types';
+
 
 const Stack = createNativeStackNavigator<ScreenPropsList>();
 
@@ -13,6 +15,7 @@ const Routes = () => (
     <Stack.Navigator>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Dashboard" component={Dashboard} />
     </Stack.Navigator>
   </NavigationContainer>
