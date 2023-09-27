@@ -1,17 +1,16 @@
 import React from 'react';
-import BottomNavBar from '@/components/BottomNavBar/BottomNavBar';
-import TopAppBar from '@/components/TopAppBar/TopAppBar';
+// import BottomNavBar from '@/components/BottomNavBar/BottomNavBar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Checklist from '@/components/Checklist';
 import { useTheme } from 'react-native-paper';
+import { DashboardScreenProps } from '@/routes/types';
+import { DashboardRoutes } from '@/routes';
 
-const Dashboard = () => {
+const Dashboard = (props: DashboardScreenProps) => {
+  const { navigation } = props;
   const theme = useTheme();
   return (
     <SafeAreaProvider style={{ backgroundColor: theme.colors.background }}>
-      <TopAppBar />
-      <Checklist />
-      <BottomNavBar />
+      <DashboardRoutes />
     </SafeAreaProvider>
   );
 };

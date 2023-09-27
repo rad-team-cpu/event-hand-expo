@@ -21,10 +21,10 @@ const Login = ({ navigation }: LoginScreenProps) => {
     if (emailError || passwordError) {
       setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
-      return;
+      // return;
     }
 
-    navigation.navigate('Welcome');
+    navigation.navigate('Dashboard');
   };
 
   return (
