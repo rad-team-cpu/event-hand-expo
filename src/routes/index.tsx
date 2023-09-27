@@ -2,18 +2,16 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { DashboardTabScreenPropsList, ScreenPropsList } from './types';
 import Dashboard from '@/screens/Dashboard';
 import Welcome from '@/screens/Welcome';
 import Login from '@/screens/Login';
-import { DashboardTabScreenPropsList, ScreenPropsList } from './types';
 import TopAppBar from '@/components/TopAppBar/TopAppBar';
 import Checklist from '@/screens/Checklist';
 import EventList from '@/screens/EventList';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import Inbox from '@/screens/Inbox';
 import Notifications from '@/screens/Notifications';
-
-const Stack = createNativeStackNavigator<ScreenPropsList>();
 
 const Tab = createMaterialBottomTabNavigator<DashboardTabScreenPropsList>();
 
@@ -61,26 +59,28 @@ const DashboardRoutes = () => (
   </Tab.Navigator>
 );
 
+const MainStack = createNativeStackNavigator<ScreenPropsList>();
+
 const Routes = () => (
   <NavigationContainer>
-    <Stack.Navigator>
-      <Stack.Screen
+    <MainStack.Navigator>
+      <MainStack.Screen
         name="Welcome"
         component={Welcome}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      <MainStack.Screen
         name="Login"
         component={Login}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      <MainStack.Screen
         name="Dashboard"
         component={Dashboard}
         options={{ header: TopAppBar }}
       />
-      <Stack.Screen name="Checklist" component={Checklist} />
-    </Stack.Navigator>
+      <MainStack.Screen name="Checklist" component={Checklist} />
+    </MainStack.Navigator>
   </NavigationContainer>
 );
 
