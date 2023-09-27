@@ -12,6 +12,7 @@ import Checklist from '@/screens/Checklist';
 import EventList from '@/screens/EventList';
 import Inbox from '@/screens/Inbox';
 import Notifications from '@/screens/Notifications';
+import Questionnaire from '@/screens/Questionnaire';
 
 const Tab = createMaterialBottomTabNavigator<DashboardTabScreenPropsList>();
 
@@ -79,6 +80,7 @@ const Routes = () => (
         component={Dashboard}
         options={{ header: TopAppBar }}
       />
+      <MainStack.Screen name="Questionnaire" component={Questionnaire} />
       <MainStack.Screen name="Checklist" component={Checklist} />
     </MainStack.Navigator>
   </NavigationContainer>

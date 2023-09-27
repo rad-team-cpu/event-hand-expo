@@ -1,15 +1,22 @@
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import type { MaterialBottomTabScreenProps } from 'react-native-paper';
+import type {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack';
 import type {
   NavigatorScreenParams,
   CompositeScreenProps,
 } from '@react-navigation/native';
+import {
+  MaterialBottomTabNavigationProp,
+  MaterialBottomTabScreenProps,
+} from '@react-navigation/material-bottom-tabs';
 
 type ScreenPropsList = {
   Welcome: undefined;
   Login: undefined;
   Dashboard: undefined;
   Checklist: undefined;
+  Questionnaire: undefined;
 };
 
 type WelcomeScreenProps = NativeStackScreenProps<ScreenPropsList, 'Welcome'>;
@@ -19,6 +26,16 @@ type LoginScreenProps = NativeStackScreenProps<ScreenPropsList, 'Login'>;
 type DashboardScreenProps = NativeStackScreenProps<
   ScreenPropsList,
   'Dashboard'
+>;
+
+type DashboardScreenNavigationProp = NativeStackNavigationProp<
+  ScreenPropsList,
+  'Dashboard'
+>;
+
+type QuestionnaireScreenProps = NativeStackScreenProps<
+  ScreenPropsList,
+  'Questionnaire'
 >;
 
 type ChecklistScreenProps = NativeStackScreenProps<
@@ -53,9 +70,11 @@ export {
   WelcomeScreenProps,
   LoginScreenProps,
   DashboardScreenProps,
+  DashboardScreenNavigationProp,
   ChecklistScreenProps,
   DashboardTabScreenPropsList,
   EventListScreenProps,
+  QuestionnaireScreenProps,
   InboxScreenProps,
   NotificationsScreenProps,
 };

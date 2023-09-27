@@ -1,10 +1,15 @@
 import React from 'react';
 // import BottomNavBar from '@/components/BottomNavBar/BottomNavBar';
 import { FAB } from 'react-native-paper';
-import { EventListScreenProps } from '@/routes/types';
+import {
+  DashboardScreenNavigationProp,
+  EventListScreenProps,
+} from '@/routes/types';
+import { useNavigation } from '@react-navigation/native';
 
 const EventList = (props: EventListScreenProps) => {
-  const { navigation } = props;
+  const navigation = useNavigation<DashboardScreenNavigationProp>();
+
   return (
     <FAB
       icon="plus"
@@ -16,7 +21,7 @@ const EventList = (props: EventListScreenProps) => {
         right: 0,
         bottom: 0,
       }}
-      // onPress={() => navigation.navigate('Dashboard', { screen: 'Checklist' })}
+      onPress={() => navigation.navigate('Questionnaire')}
     />
   );
 };
