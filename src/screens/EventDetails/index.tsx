@@ -2,8 +2,10 @@ import React, { useState, useCallback } from 'react';
 import { Text, TextInput, Checkbox, Button } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 import Slider from '@react-native-community/slider';
+import { EventDetailsScreenProps } from '@/routes/types';
 
-const EventDetails = () => {
+const EventDetails = (props: EventDetailsScreenProps) => {
+  const { navigation } = props;
   const [text, setText] = useState('');
   const [checked, setChecked] = useState(false);
 
@@ -66,7 +68,7 @@ const EventDetails = () => {
         style={{ margin: 5 }}
       />
       <Button
-        onPress={() => setOpen(true)}
+        onPress={() => navigation.navigate('Checklist')}
         uppercase={false}
         mode="outlined"
         buttonColor="#3D50DF"
