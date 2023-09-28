@@ -7,7 +7,7 @@ import Welcome from '@/screens/Welcome';
 import Login from '@/screens/Login';
 import TopAppBar from '@/components/TopAppBar/TopAppBar';
 import Checklist from '@/screens/Checklist';
-import Questionnaire from '@/screens/Questionnaire';
+import EventDetails from '@/screens/EventDetails';
 
 const MainStack = createNativeStackNavigator<ScreenPropsList>();
 
@@ -29,7 +29,7 @@ const Routes = () => (
         component={Dashboard}
         options={{ header: TopAppBar }}
       />
-      <MainStack.Screen name="Questionnaire" component={Questionnaire} />
+      <MainStack.Screen name="EventDetails" component={EventDetails} />
       <MainStack.Screen name="Checklist" component={Checklist} />
     </MainStack.Navigator>
   </NavigationContainer>

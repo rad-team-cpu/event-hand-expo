@@ -6,17 +6,14 @@ import type {
   NavigatorScreenParams,
   CompositeScreenProps,
 } from '@react-navigation/native';
-import {
-  MaterialBottomTabNavigationProp,
-  MaterialBottomTabScreenProps,
-} from '@react-navigation/material-bottom-tabs';
+import { MaterialBottomTabScreenProps } from '@react-navigation/material-bottom-tabs';
 
 type ScreenPropsList = {
   Welcome: undefined;
   Login: undefined;
   Dashboard: undefined;
+  EventDetails: undefined;
   Checklist: undefined;
-  Questionnaire: undefined;
 };
 
 type WelcomeScreenProps = NativeStackScreenProps<ScreenPropsList, 'Welcome'>;
@@ -35,7 +32,7 @@ type DashboardScreenNavigationProp = NativeStackNavigationProp<
 
 type QuestionnaireScreenProps = NativeStackScreenProps<
   ScreenPropsList,
-  'Questionnaire'
+  'EventDetails'
 >;
 
 type ChecklistScreenProps = NativeStackScreenProps<
