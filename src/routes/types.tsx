@@ -30,7 +30,7 @@ type DashboardScreenNavigationProp = NativeStackNavigationProp<
   'Dashboard'
 >;
 
-type QuestionnaireScreenProps = NativeStackScreenProps<
+type EventDetailsScreenProps = NativeStackScreenProps<
   ScreenPropsList,
   'EventDetails'
 >;
@@ -71,7 +71,7 @@ export {
   ChecklistScreenProps,
   DashboardTabScreenPropsList,
   EventListScreenProps,
-  QuestionnaireScreenProps,
+  EventDetailsScreenProps,
   InboxScreenProps,
   NotificationsScreenProps,
 };
