@@ -68,7 +68,7 @@ const EventDetails = (props: EventDetailsScreenProps) => {
         style={{ margin: 5 }}
       />
       <Button
-        onPress={() => navigation.navigate('Checklist')}
+        onPress={() => navigation.navigate('SupplierSelect')}
         uppercase={false}
         mode="outlined"
         buttonColor="#3D50DF"
