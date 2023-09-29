@@ -21,7 +21,7 @@ const EventList = (props: EventListScreenProps) => {
         right: 0,
         bottom: 0,
       }}
-      onPress={() => navigation.navigate('EventDetails')}
+      onPress={() => navigation.navigate('EventType')}
     />
   );
 };

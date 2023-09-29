@@ -13,6 +13,7 @@ type ScreenPropsList = {
   Login: undefined;
   Dashboard: undefined;
   EventDetails: undefined;
+  EventType: undefined;
   SupplierSelect: undefined;
   Checklist: undefined;
   SupplierList: undefined;
@@ -35,6 +36,11 @@ type DashboardScreenNavigationProp = NativeStackNavigationProp<
 type EventDetailsScreenProps = NativeStackScreenProps<
   ScreenPropsList,
   'EventDetails'
+>;
+
+type EventTypeScreenProps = NativeStackScreenProps<
+  ScreenPropsList,
+  'EventType'
 >;
 
 type SupplierSelectScreenProps = NativeStackScreenProps<
@@ -81,11 +87,12 @@ export {
   DashboardScreenProps,
   DashboardScreenNavigationProp,
   EventListScreenProps,
+  EventDetailsScreenProps,
+  EventTypeScreenProps,
   SupplierSelectScreenProps,
   ChecklistScreenProps,
   SupplierListScreenProps,
   DashboardTabScreenPropsList,
-  EventDetailsScreenProps,
   InboxScreenProps,
   NotificationsScreenProps,
 };
