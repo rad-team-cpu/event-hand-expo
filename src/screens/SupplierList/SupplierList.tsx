@@ -110,10 +110,7 @@ const data = [
 const SupplierList = () => {
   return (
     <GestureHandlerRootView>
-      <ScrollView>
-        {/* <SupplierListAppBar /> */}
-        {SupplierCards(data)}
-      </ScrollView>
+      <ScrollView>{SupplierCards(data)}</ScrollView>
     </GestureHandlerRootView>
   );
 };

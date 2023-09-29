@@ -1,7 +1,9 @@
+import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { Appbar, Searchbar } from 'react-native-paper';
 
-const SupplierListAppBar = () => {
+const SupplierListAppBar = (props: NativeStackHeaderProps) => {
+  const { navigation } = props;
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [showSearch, setShowSearch] = useState<boolean>(false);
 
@@ -13,7 +15,7 @@ const SupplierListAppBar = () => {
   return (
     <>
       <Appbar.Header style={{ backgroundColor: '#4A43EC' }}>
-        <Appbar.BackAction color="white" onPress={() => {}} />
+        <Appbar.BackAction color="white" onPress={navigation.goBack} />
         <Appbar.Content
           title="Supplier List"
           titleStyle={{ fontWeight: 'bold' }}

@@ -10,6 +10,7 @@ import Checklist from '@/screens/Checklist';
 import EventDetails from '@/screens/EventDetails';
 import SupplierSelect from '@/screens/SupplierSelect';
 import SupplierList from '@/screens/SupplierList/SupplierList';
+import SupplierListAppBar from '@/components/SupplierListAppBar/SupplierListBar';
 
 const MainStack = createNativeStackNavigator<ScreenPropsList>();
 
@@ -34,7 +35,11 @@ const Routes = () => (
       <MainStack.Screen name="EventDetails" component={EventDetails} />
       <MainStack.Screen name="SupplierSelect" component={SupplierSelect} />
       <MainStack.Screen name="Checklist" component={Checklist} />
-      <MainStack.Screen name="SupplierList" component={SupplierList} />
+      <MainStack.Screen
+        name="SupplierList"
+        component={SupplierList}
+        options={{ header: SupplierListAppBar }}
+      />
     </MainStack.Navigator>
   </NavigationContainer>
 );
