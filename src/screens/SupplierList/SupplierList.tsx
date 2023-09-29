@@ -1,7 +1,10 @@
 import React from 'react';
 import SupplierCards from '@/components/Card/SupplierCard';
-import SupplierListAppBar from '@/components/SupplierListAppBar/SupplierListBar';
 import { faker } from '@faker-js/faker';
+import {
+  GestureHandlerRootView,
+  ScrollView,
+} from 'react-native-gesture-handler';
 
 const data = [
   {
@@ -106,10 +109,12 @@ const data = [
 
 const SupplierList = () => {
   return (
-    <>
-      <SupplierListAppBar />
-      {SupplierCards(data)}
-    </>
+    <GestureHandlerRootView>
+      <ScrollView>
+        {/* <SupplierListAppBar /> */}
+        {SupplierCards(data)}
+      </ScrollView>
+    </GestureHandlerRootView>
   );
 };
 

@@ -1,6 +1,7 @@
+import { ChecklistScreenProps } from '@/routes/types';
 import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { Checkbox } from 'react-native-paper';
+import { Checkbox, Button } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 interface CheckboxProps {
@@ -23,7 +24,8 @@ function CustomCheckbox({ label }: CheckboxProps) {
   );
 }
 
-function Checklist() {
+const Checklist = (props: ChecklistScreenProps) => {
+  const { navigation } = props;
   return (
     <SafeAreaProvider style={styles.container}>
       <CustomCheckbox label="Venue" />
@@ -31,9 +33,27 @@ function Checklist() {
       <CustomCheckbox label="Stylist" />
       <CustomCheckbox label="Photography" />
       <CustomCheckbox label="Videography" />
+      <Button
+        onPress={() => navigation.navigate('SupplierList')}
+        uppercase={false}
+        mode="outlined"
+        buttonColor="#3D50DF"
+        textColor="white"
+        labelStyle={{ fontWeight: 'bold' }}
+        style={{
+          position: 'absolute',
+          justifyContent: 'center',
+          margin: 16,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        NEXT
+      </Button>
     </SafeAreaProvider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
