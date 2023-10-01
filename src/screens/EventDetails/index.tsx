@@ -3,12 +3,11 @@ import { Text, TextInput, Checkbox, Button } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 import Slider from '@react-native-community/slider';
 import { EventDetailsScreenProps } from '@/routes/types';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const EventDetails = (props: EventDetailsScreenProps) => {
   const { navigation } = props;
   const [text, setText] = useState('');
-  const [checked, setChecked] = useState(false);
-
   const [date, setDate] = useState(undefined);
   const [open, setOpen] = useState(false);
 
@@ -25,8 +24,8 @@ const EventDetails = (props: EventDetailsScreenProps) => {
   );
 
   return (
-    <>
-      <Text variant="titleLarge" style={{ margin: 5 }}>
+    <SafeAreaProvider>
+      {/* <Text variant="titleLarge" style={{ margin: 5 }}>
         What type of event will you be hosting?
       </Text>
       <Button
@@ -36,7 +35,7 @@ const EventDetails = (props: EventDetailsScreenProps) => {
         style={{ margin: 5 }}
       >
         Select Event Type
-      </Button>
+      </Button> */}
       <Text>{''}</Text>
       <Text variant="titleLarge" style={{ margin: 5 }}>
         When is the date of event?
@@ -45,8 +44,10 @@ const EventDetails = (props: EventDetailsScreenProps) => {
         locale="en"
         mode="single"
         visible={open}
+        presentationStyle="pageSheet"
         onDismiss={onDismissSingle}
         date={date}
+        inputEnabled={false}
         onConfirm={onConfirmSingle}
       />
       <Button
@@ -57,7 +58,7 @@ const EventDetails = (props: EventDetailsScreenProps) => {
       >
         DATE
       </Button>
-      <Text variant="titleLarge" style={{ margin: 5 }}>
+      {/* <Text variant="titleLarge" style={{ margin: 5 }}>
         How much is your budget for the Event
       </Text>
       <TextInput
@@ -66,7 +67,7 @@ const EventDetails = (props: EventDetailsScreenProps) => {
         value={text}
         onChangeText={(text) => setText(text)}
         style={{ margin: 5 }}
-      />
+      /> */}
       <Button
         onPress={() => navigation.navigate('SupplierSelect')}
         uppercase={false}
@@ -98,7 +99,7 @@ const EventDetails = (props: EventDetailsScreenProps) => {
         minimumTrackTintColor="#FFFFFF"
         maximumTrackTintColor="#000000"
       /> */}
-    </>
+    </SafeAreaProvider>
   );
 };
 
