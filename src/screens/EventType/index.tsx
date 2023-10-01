@@ -21,7 +21,7 @@ const EventType = (props: EventTypeScreenProps) => {
         <RadioButton.Item label="Corporate" value="CORPORATE" />
       </RadioButton.Group>
       <Button
-        onPress={() => navigation.navigate('EventDetails')}
+        onPress={() => navigation.navigate('EventDateSelect')}
         uppercase={false}
         mode="outlined"
         buttonColor="#3D50DF"
