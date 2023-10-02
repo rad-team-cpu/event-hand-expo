@@ -63,7 +63,7 @@ const EventDateSelect = (props: EventDateSelectScreenProps) => {
         </Button>
       </View>
       <Button
-        onPress={() => navigation.navigate('SupplierSelect')}
+        onPress={() => navigation.navigate('EventBudgetInput')}
         uppercase={false}
         mode="outlined"
         buttonColor="#3D50DF"

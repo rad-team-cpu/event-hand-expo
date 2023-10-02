@@ -14,6 +14,7 @@ type ScreenPropsList = {
   Dashboard: undefined;
   EventDateSelect: undefined;
   EventType: undefined;
+  EventBudgetInput: undefined;
   SupplierSelect: undefined;
   Checklist: undefined;
   SupplierList: undefined;
@@ -41,6 +42,11 @@ type EventDateSelectScreenProps = NativeStackScreenProps<
 type EventTypeScreenProps = NativeStackScreenProps<
   ScreenPropsList,
   'EventType'
+>;
+
+type EventBudgetInputScreenProps = NativeStackScreenProps<
+  ScreenPropsList,
+  'EventBudgetInput'
 >;
 
 type SupplierSelectScreenProps = NativeStackScreenProps<
@@ -89,6 +95,7 @@ export {
   EventListScreenProps,
   EventDateSelectScreenProps,
   EventTypeScreenProps,
+  EventBudgetInputScreenProps,
   SupplierSelectScreenProps,
   ChecklistScreenProps,
   SupplierListScreenProps,
