@@ -5,8 +5,8 @@ import { useTheme } from 'react-native-paper';
 import { DashboardScreenProps } from '@/routes/types';
 import { DashboardRoutes } from '@/routes';
 
-const Dashboard = (props: DashboardScreenProps) => {
-  const { navigation } = props;
+const Dashboard = ({ navigation }: DashboardScreenProps) => {
+
   const theme = useTheme();
   return (
     <SafeAreaProvider style={{ backgroundColor: theme.colors.background }}>

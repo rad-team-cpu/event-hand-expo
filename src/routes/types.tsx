@@ -11,6 +11,7 @@ type ScreenPropsList = {
   Signup: undefined;
   Dashboard: undefined;
   Checklist: undefined;
+  VerifyCode: undefined;
 };
 
 type WelcomeScreenProps = NativeStackScreenProps<ScreenPropsList, 'Welcome'>;
@@ -18,6 +19,9 @@ type WelcomeScreenProps = NativeStackScreenProps<ScreenPropsList, 'Welcome'>;
 type LoginScreenProps = NativeStackScreenProps<ScreenPropsList, 'Login'>;
 
 type SignupScreenProps = NativeStackScreenProps<ScreenPropsList, 'Signup'>;
+
+ type VerifyCodeScreenProps = NativeStackScreenProps<ScreenPropsList, 'VerifyCode'>;
+
 
 
 type DashboardScreenProps = NativeStackScreenProps<
@@ -52,6 +56,7 @@ type NotificationsScreenProps = CompositeScreenProps<
   NativeStackScreenProps<ScreenPropsList>
 >;
 
+
 export {
   ScreenPropsList,
   WelcomeScreenProps,
@@ -63,4 +68,5 @@ export {
   EventListScreenProps,
   InboxScreenProps,
   NotificationsScreenProps,
+  VerifyCodeScreenProps
 };

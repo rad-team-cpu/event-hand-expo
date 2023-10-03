@@ -4,6 +4,9 @@
     "slug": "event-hand-expo",
     "version": "1.0.0",
     "assetBundlePatterns": ["**/*"],
+    "extra" : {
+      "clerkPublishableKey": "process.env.CLERK_PUBLISHABLE_KEY"
+    },
     "experiments": {
       "tsconfigPaths": true
     }
