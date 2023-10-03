@@ -1,4 +1,4 @@
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { MaterialBottomTabScreenProps } from 'react-native-paper';
 import type {
   NavigatorScreenParams,
@@ -11,13 +11,15 @@ type ScreenPropsList = {
   Signup: undefined;
   Dashboard: undefined;
   Checklist: undefined;
+  Profile: undefined;
   VerifyCode: undefined;
 };
 
 type WelcomeScreenProps = NativeStackScreenProps<ScreenPropsList, 'Welcome'>;
 
 type LoginScreenProps = NativeStackScreenProps<ScreenPropsList, 'Login'>;
-
+type ProfileScreenProps = NativeStackScreenProps<ScreenPropsList, 'Profile'>;
+type ProfileNavigationProps = NativeStackNavigationProp<ScreenPropsList, 'Profile'>
 type SignupScreenProps = NativeStackScreenProps<ScreenPropsList, 'Signup'>;
 
  type VerifyCodeScreenProps = NativeStackScreenProps<ScreenPropsList, 'VerifyCode'>;
@@ -63,6 +65,8 @@ export {
   LoginScreenProps,
   SignupScreenProps,
   DashboardScreenProps,
+  ProfileScreenProps,
+  ProfileNavigationProps,
   ChecklistScreenProps,
   DashboardTabScreenPropsList,
   EventListScreenProps,

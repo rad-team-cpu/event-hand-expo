@@ -13,6 +13,7 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import Inbox from '@/screens/Inbox';
 import Notifications from '@/screens/Notifications';
 import Signup from '@/screens/Signup';
+import Profile from '@/screens/Profile';
 
 
 const Stack = createNativeStackNavigator<ScreenPropsList>();
@@ -85,6 +86,11 @@ const Routes = () => (
         name="Dashboard"
         component={Dashboard}
         options={{ header: TopAppBar }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        // options={{ headerShown: false }}
       />
       <Stack.Screen name="Checklist" component={Checklist} />
     </Stack.Navigator>

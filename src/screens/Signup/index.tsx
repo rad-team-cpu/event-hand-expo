@@ -180,7 +180,6 @@ export default function Signup({ navigation }: SignupScreenProps) {
         <View>
           <View>
             <TextInput
-              style={styles.container}
               label="Email"
               autoCapitalize="none"
               value={emailAddress}
@@ -246,7 +245,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.primary,
   },
-  container: {
-    width: '100%',
-  }
 });
