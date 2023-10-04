@@ -4,7 +4,7 @@ import { Text, TextInput, HelperText, Button } from 'react-native-paper';
 
 const EventBudgetInput = (props: EventBudgetInputScreenProps) => {
   const { navigation } = props;
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [input, setInput] = useState<string>('');
 
