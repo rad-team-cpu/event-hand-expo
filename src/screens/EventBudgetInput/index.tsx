@@ -1,15 +1,16 @@
 import { EventBudgetInputScreenProps } from '@/routes/types';
 import React, { useState } from 'react';
+import { GestureResponderEvent } from 'react-native';
 import { Text, TextInput, HelperText, Button } from 'react-native-paper';
 
 const EventBudgetInput = (props: EventBudgetInputScreenProps) => {
   const { navigation } = props;
-  const [error, setError] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [input, setInput] = useState<string>('');
 
   const onChange = (text: string) => {
-    if (text.match(/^[^\d]+$/g)) {
+    if (!text.match(/^[1-9][0-9]*$/g)) {
       setError(true);
       setErrorMessage('Please Enter a valid number');
     } else if (parseFloat(text) < 10000) {
@@ -19,6 +20,15 @@ const EventBudgetInput = (props: EventBudgetInputScreenProps) => {
       setError(false);
     }
     setInput(text);
+  };
+
+  const next = (event: GestureResponderEvent) => {
+    if (!input.match(/^[1-9][0-9]*$/g)) {
+      setError(true);
+      setErrorMessage('Please Enter a valid number');
+    } else {
+      navigation.navigate('SupplierSelect');
+    }
   };
 
   return (
@@ -44,7 +54,7 @@ const EventBudgetInput = (props: EventBudgetInputScreenProps) => {
         {errorMessage}
       </HelperText>
       <Button
-        onPress={() => navigation.navigate('SupplierSelect')}
+        onPress={next}
         mode="outlined"
         buttonColor="#3D50DF"
         textColor="white"
