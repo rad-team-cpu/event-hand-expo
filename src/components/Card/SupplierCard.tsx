@@ -6,6 +6,9 @@ import Block from "../Block";
 import Image from "../Image";
 import Text from "../Text";
 import Button from "../Button"
+import { useNavigation } from '@react-navigation/native';
+import { DashboardScreenNavigationProp } from '@/routes/types';
+
 
 interface SupplierCardProps {
   key?: string;
@@ -44,6 +47,8 @@ const createStars = (averageRating: number) => {
 const SupplierCard = (props: SupplierCardProps) => {
   const { key, name, serviceType, avatar, averageRating } = props;
   const {assets, colors, gradients, sizes, icons} = useTheme();
+  const navigation = useNavigation<DashboardScreenNavigationProp>();
+
 
 
   return (
@@ -82,7 +87,7 @@ const SupplierCard = (props: SupplierCardProps) => {
             Message
           </Text>
         </Button>
-        <Button flex={1} gradient={gradients.primary} marginBottom={sizes.base} marginHorizontal={sizes.xs}>
+        <Button flex={1} gradient={gradients.primary} marginBottom={sizes.base} marginHorizontal={sizes.xs}  onPress={() => navigation.navigate('EventDateSelect')}>
           <Text white bold transform="uppercase">
             View
           </Text>
