@@ -1,9 +1,13 @@
 import { ChecklistScreenProps } from '@/routes/types';
 import React, { useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Card, IconButton, Button } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-
+import Block from '@/components/Block';
+import Image from '@/components/Image';
+import Text from '@/components/Text';
+import { TouchableOpacity } from 'react-native';
+import useTheme from '@/core/theme';
 // interface CheckboxProps {
 //   label: string;
 // }
@@ -26,6 +30,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Checklist = (props: ChecklistScreenProps) => {
   const { navigation } = props;
+  const {assets, colors, gradients, sizes} = useTheme();
+
 
   const rightButton = () => {
     return (
@@ -40,7 +46,72 @@ const Checklist = (props: ChecklistScreenProps) => {
   };
   return (
     <SafeAreaProvider>
-      <Card mode="elevated" style={{ margin: 5 }} elevation={5}>
+
+
+  <View style={{ height: 145 }} >
+    <Block card row marginHorizontal={sizes.sm} marginVertical={sizes.xs}>
+      <Image
+        resizeMode="contain"
+        source={assets?.card1}
+        style={{ height: 114 }}
+      />
+      <Block row flex={1} padding={sizes.s} justify="space-between" align="center">
+        <Text h4 semibold>Venues</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('SupplierList')}>
+          <Image
+            source={assets.arrow}
+            color={colors.link}
+            style={{ width: sizes.sm, height: sizes.sm }}
+          />
+        </TouchableOpacity>
+      </Block>
+    </Block>
+  </View>
+
+  <View style={{ height: 145 }}>
+    <Block card row marginHorizontal={sizes.sm} marginVertical={sizes.xs}>
+      <Image
+        resizeMode="contain"
+        source={assets?.card1}
+        style={{ height: 114 }}
+      />
+      <Block row flex={1} padding={sizes.s} justify="space-between" align="center">
+        <Text h4 semibold>Caterings</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('SupplierList')}>
+          <Image
+            source={assets.arrow}
+            color={colors.link}
+            style={{ width: sizes.sm, height: sizes.sm }}
+          />
+        </TouchableOpacity>
+      </Block>
+    </Block>
+  </View>
+
+  <View style={{ height: 145 }}>
+    <Block card row marginHorizontal={sizes.sm} marginVertical={sizes.xs}>
+      <Image
+        resizeMode="contain"
+        source={assets?.card1}
+        style={{ height: 114 }}
+      />
+      <Block row flex={1} padding={sizes.s} justify="space-between" align="center">
+        <Text h4 semibold>Decoration</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('SupplierList')}>
+          <Image
+            source={assets.arrow}
+            color={colors.link}
+            style={{ width: sizes.sm, height: sizes.sm }}
+          />
+        </TouchableOpacity>
+      </Block>
+    </Block>
+  </View>
+
+
+
+
+      {/* <Card mode="elevated" style={{ margin: 5 }} elevation={5}>
         <Card.Title title="Venue" right={rightButton} />
       </Card>
       <Card mode="elevated" style={{ margin: 5 }} elevation={5}>
@@ -54,7 +125,7 @@ const Checklist = (props: ChecklistScreenProps) => {
       </Card>
       <Card mode="elevated" style={{ margin: 5 }} elevation={5}>
         <Card.Title title="Videography" right={rightButton} />
-      </Card>
+      </Card> */}
     </SafeAreaProvider>
   );
 };
