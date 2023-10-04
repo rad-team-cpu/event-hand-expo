@@ -1,56 +1,60 @@
 import { ChecklistScreenProps } from '@/routes/types';
 import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { Checkbox, Button } from 'react-native-paper';
+import { Card, IconButton, Button } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-interface CheckboxProps {
-  label: string;
-}
+// interface CheckboxProps {
+//   label: string;
+// }
 
-function CustomCheckbox({ label }: CheckboxProps) {
-  const [checked, setChecked] = useState(false);
+// function CustomCheckbox({ label }: CheckboxProps) {
+//   const [checked, setChecked] = useState(false);
 
-  return (
-    <View style={styles.checkboxContainer}>
-      <Checkbox.Android
-        status={checked ? 'checked' : 'unchecked'}
-        onPress={() => {
-          setChecked(!checked);
-        }}
-      />
-      <Text style={styles.label}>{label}</Text>
-    </View>
-  );
-}
+//   return (
+//     <View style={styles.checkboxContainer}>
+//       <Checkbox.Android
+//         status={checked ? 'checked' : 'unchecked'}
+//         onPress={() => {
+//           setChecked(!checked);
+//         }}
+//       />
+//       <Text style={styles.label}>{label}</Text>
+//     </View>
+//   );
+// }
 
 const Checklist = (props: ChecklistScreenProps) => {
   const { navigation } = props;
+
+  const rightButton = () => {
+    return (
+      <>
+        <IconButton
+          icon="chevron-right"
+          size={36}
+          onPress={() => navigation.navigate('SupplierList')}
+        />
+      </>
+    );
+  };
   return (
-    <SafeAreaProvider style={styles.container}>
-      <CustomCheckbox label="Venue" />
-      <CustomCheckbox label="Catering" />
-      <CustomCheckbox label="Stylist" />
-      <CustomCheckbox label="Photography" />
-      <CustomCheckbox label="Videography" />
-      <Button
-        onPress={() => navigation.navigate('SupplierList')}
-        uppercase={false}
-        mode="outlined"
-        buttonColor="#3D50DF"
-        textColor="white"
-        labelStyle={{ fontWeight: 'bold' }}
-        style={{
-          position: 'absolute',
-          justifyContent: 'center',
-          margin: 16,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        }}
-      >
-        NEXT
-      </Button>
+    <SafeAreaProvider>
+      <Card mode="elevated" style={{ margin: 5 }} elevation={5}>
+        <Card.Title title="Venue" right={rightButton} />
+      </Card>
+      <Card mode="elevated" style={{ margin: 5 }} elevation={5}>
+        <Card.Title title="Catering" right={rightButton} />
+      </Card>
+      <Card mode="elevated" style={{ margin: 5 }} elevation={5}>
+        <Card.Title title="Decoration" right={rightButton} />
+      </Card>
+      <Card mode="elevated" style={{ margin: 5 }} elevation={5}>
+        <Card.Title title="Photography" right={rightButton} />
+      </Card>
+      <Card mode="elevated" style={{ margin: 5 }} elevation={5}>
+        <Card.Title title="Videography" right={rightButton} />
+      </Card>
     </SafeAreaProvider>
   );
 };
