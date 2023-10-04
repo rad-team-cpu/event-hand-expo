@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { EventTypeScreenProps } from '@/routes/types';
 import { View } from 'react-native';
-import { RadioButton, Button } from 'react-native-paper';
+import { RadioButton} from 'react-native-paper';
+import Button from '@/components/Button';
+import Text from '@/components/Text';
 
 const EventType = (props: EventTypeScreenProps) => {
   const { navigation } = props;
@@ -22,22 +24,11 @@ const EventType = (props: EventTypeScreenProps) => {
       </RadioButton.Group>
       <Button
         onPress={() => navigation.navigate('EventDateSelect')}
-        uppercase={false}
-        mode="outlined"
-        buttonColor="#3D50DF"
-        textColor="white"
         disabled={eventType == ''}
-        labelStyle={{ fontWeight: 'bold' }}
-        style={{
-          position: 'relative',
-          justifyContent: 'center',
-          margin: 16,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        }}
       >
+        <Text>
         NEXT
+        </Text>
       </Button>
     </View>
   );

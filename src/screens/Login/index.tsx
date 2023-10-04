@@ -6,7 +6,7 @@ import Header from '../../components/Header';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import BackButton from '../../components/BackButton';
-import { theme } from '../../core/theme';
+// import { theme } from '../../core/theme';
 import { emailValidator, passwordValidator } from '../../core/utils';
 import { LoginScreenProps } from '@/routes/types';
 
@@ -59,19 +59,21 @@ const Login = ({ navigation }: LoginScreenProps) => {
 
       <View style={styles.forgotPassword}>
         <TouchableOpacity onPress={() => navigation.navigate('Welcome')}>
-          <Text style={styles.label}>Forgot your password?</Text>
+          {/* <Text style={styles.label}>Forgot your password?</Text> */}
         </TouchableOpacity>
       </View>
 
-      <Button mode="contained" onPress={_onLoginPressed}>
+      <Button onPress={_onLoginPressed}>
+        <Text>
         Login
+        </Text>
       </Button>
 
       <View style={styles.row}>
-        <Text style={styles.label}>Don’t have an account? </Text>
+        {/* <Text style={styles.label}>Don’t have an account? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Welcome')}>
-          <Text style={styles.link}>Sign up</Text>
-        </TouchableOpacity>
+          <Text style={styles.link}>Sign up</Text> */}
+        {/* </TouchableOpacity> */}
       </View>
     </Background>
   );
@@ -87,13 +89,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 4,
   },
-  label: {
-    color: theme.colors.secondary,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: theme.colors.primary,
-  },
+  // label: {
+  //   color: theme.colors.secondary,
+  // },
+  // link: {
+  //   fontWeight: 'bold',
+  //   color: theme.colors.primary,
+  // },
 });
 
 export default memo(Login);

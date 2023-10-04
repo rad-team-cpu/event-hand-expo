@@ -78,8 +78,9 @@ const EventDateSelect = (props: EventDateSelectScreenProps) => {
           left: 0,
           right: 0,
         }}
-      >
+      ><Text>
         NEXT
+        </Text>
       </Button>
       {/* <Checkbox
         status={checked ? 'checked' : 'unchecked'}

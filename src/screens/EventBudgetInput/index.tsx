@@ -69,7 +69,9 @@ const EventBudgetInput = (props: EventBudgetInputScreenProps) => {
           right: 0,
         }}
       >
+      <Text>
         NEXT
+      </Text>
       </Button>
     </>
   );

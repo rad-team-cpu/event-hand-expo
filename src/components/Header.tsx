@@ -1,6 +1,6 @@
+import theme from '@/core/theme';
 import React, { memo } from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { theme } from '../core/theme';
 
 type Props = {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ const Header = ({ children }: Props) => (
 const styles = StyleSheet.create({
   header: {
     fontSize: 26,
-    color: theme.colors.primary,
+    // color: theme.colors.primary,
     fontWeight: 'bold',
     paddingVertical: 14,
   },

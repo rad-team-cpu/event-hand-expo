@@ -4,6 +4,7 @@ import Logo from '../../components/Logo';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 import Paragraph from '@/components/Paragraph';
+import Text from '@/components/Text';
 import { WelcomeScreenProps } from '@/routes/types';
 
 const Welcome = ({ navigation }: WelcomeScreenProps) => {
@@ -14,8 +15,10 @@ const Welcome = ({ navigation }: WelcomeScreenProps) => {
       <Paragraph>
         Welcome to EventHand! Supplying you with special moments.
       </Paragraph>
-      <Button mode="outlined" onPress={() => navigation.navigate('Login')}>
-        Login
+      <Button onPress={() => navigation.navigate('Login')}>
+        <Text white bold transform="uppercase">
+          Login
+        </Text>
       </Button>
     </Background>
   );

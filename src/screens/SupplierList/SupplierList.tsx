@@ -5,6 +5,7 @@ import {
   GestureHandlerRootView,
   ScrollView,
 } from 'react-native-gesture-handler';
+import Card from '@/components/Card/Card';
 
 const data = [
   {
