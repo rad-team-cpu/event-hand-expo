@@ -179,9 +179,9 @@ const Button = ({
       // }
 
       /* haptic feedback onPress */
-      if (haptic) {
-        Haptics.selectionAsync();
-      }
+      // if (haptic) {
+      //   Haptics.selectionAsync();
+      // }
     },
     [haptic, vibrate, vibrateRepeat, onPress],
   );
