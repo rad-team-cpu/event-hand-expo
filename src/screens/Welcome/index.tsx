@@ -44,20 +44,7 @@ const Welcome = ({ navigation }: WelcomeScreenProps) => {
       </Block>
     </Block>
   </Image>
-);
-  //   <Background>
-  //     <Logo />
-  //     <Header>EventHand</Header>
-  //     <Paragraph>
-  //       Welcome to EventHand! Supplying you with special moments.
-  //     </Paragraph>
-  //     <Button onPress={() => navigation.navigate('Login')}>
-  //       <Text black bold transform="uppercase">
-  //         Login
-  //       </Text>
-  //     </Button>
-  //   </Background>
-  // );
+  );
 };
 
 export default memo(Welcome);
