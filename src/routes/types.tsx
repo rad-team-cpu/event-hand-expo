@@ -10,6 +10,7 @@ import { MaterialBottomTabScreenProps } from '@react-navigation/material-bottom-
 
 type ScreenPropsList = {
   Welcome: undefined;
+  SignUp: undefined;
   Login: undefined;
   Dashboard: undefined;
   EventDateSelect: undefined;
@@ -21,6 +22,8 @@ type ScreenPropsList = {
 };
 
 type WelcomeScreenProps = NativeStackScreenProps<ScreenPropsList, 'Welcome'>;
+
+type SignUpScreenProps = NativeStackScreenProps<ScreenPropsList, 'SignUp'>;
 
 type LoginScreenProps = NativeStackScreenProps<ScreenPropsList, 'Login'>;
 
@@ -89,6 +92,7 @@ type NotificationsScreenProps = CompositeScreenProps<
 export {
   ScreenPropsList,
   WelcomeScreenProps,
+  SignUpScreenProps,
   LoginScreenProps,
   DashboardScreenProps,
   DashboardScreenNavigationProp,

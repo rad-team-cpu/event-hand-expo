@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {Ionicons} from '@expo/vector-icons';
-import * as Haptics from 'expo-haptics';
 import {IButtonProps} from '../constants/types';
 import useTheme from '@/core/theme';
 
