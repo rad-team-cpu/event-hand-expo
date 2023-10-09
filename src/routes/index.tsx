@@ -14,6 +14,7 @@ import SupplierListAppBar from '@/components/SupplierListAppBar/SupplierListBar'
 import EventType from '@/screens/EventType';
 import EventDateSelect from '@/screens/EventDateSelect';
 import EventBudgetInput from '@/screens/EventBudgetInput';
+import Profile from '@/screens/Profile';
 
 const MainStack = createNativeStackNavigator<ScreenPropsList>();
 
@@ -39,6 +40,11 @@ const Routes = () => (
         name="Dashboard"
         component={Dashboard}
         options={{ header: TopAppBar }}
+      />
+      <MainStack.Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: false }}
       />
       <MainStack.Screen name="EventType" component={EventType} />
       <MainStack.Screen name="EventDateSelect" component={EventDateSelect} />

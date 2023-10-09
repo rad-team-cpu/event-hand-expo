@@ -463,6 +463,8 @@ export interface ICheckboxProps extends ISpacing {
    * Checkbox onPress callback passing the checked value as params
    */
   onPress?: (checked: boolean) => void;
+
+  status?: string;
 }
 
 /**

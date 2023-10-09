@@ -4,13 +4,14 @@ import { View } from 'react-native';
 import { RadioButton} from 'react-native-paper';
 import Button from '@/components/Button';
 import Text from '@/components/Text';
+import Block from '@/components/Block';
 
 const EventType = (props: EventTypeScreenProps) => {
   const { navigation } = props;
   const [eventType, setEventType] = useState('');
 
   return (
-    <View>
+    <Block>
       <RadioButton.Group
         onValueChange={(value) => setEventType(value)}
         value={eventType}
@@ -30,7 +31,7 @@ const EventType = (props: EventTypeScreenProps) => {
         NEXT
         </Text>
       </Button>
-    </View>
+    </Block>
   );
 };
 

@@ -11,9 +11,9 @@ const Tab = createMaterialBottomTabNavigator<DashboardTabScreenPropsList>();
 const DashboardNavBarRoutes = () => (
   <Tab.Navigator
     shifting
-    barStyle={{ backgroundColor: '#3D50DF' }}
+    barStyle={{ backgroundColor: 'white' }}
     activeColor="black"
-    inactiveColor="white"
+    inactiveColor="#3D50DF"
   >
     <Tab.Screen
       name="EventList"

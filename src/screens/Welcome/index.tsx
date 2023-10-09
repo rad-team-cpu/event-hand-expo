@@ -24,7 +24,7 @@ const Welcome = ({ navigation }: WelcomeScreenProps) => {
         <Block flex={0} align="center" justify="center">
             <Logo />
           </Block>
-          <Text h4 center bold marginBottom={sizes.sm}>
+          <Text h4 center bold marginBottom={sizes.sm} font='OpenSansLight'>
             EventHand
           </Text>
           <Text center>
