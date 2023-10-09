@@ -20,9 +20,10 @@ const Welcome = ({ navigation }: WelcomeScreenProps) => {
     padding={sizes.padding}
     style={{flex: 1}}>
     <Block safe justify="center">
-      <Block card flex={0} padding={sizes.sm} marginBottom={sizes.sm}>
-        <View style={{ alignItems: 'center' }}>
-          <Logo />
+      <Block centerContent card flex={0} padding={sizes.sm} marginBottom={sizes.sm}>
+        <Block flex={0} align="center" justify="center">
+            <Logo />
+          </Block>
           <Text h4 center bold marginBottom={sizes.sm}>
             EventHand
           </Text>
@@ -32,7 +33,7 @@ const Welcome = ({ navigation }: WelcomeScreenProps) => {
           <Text center marginBottom={sizes.sm}>
             Supplying you with special moments.
           </Text>
-        </View>
+        
         <Button
           gradient={gradients.primary}
           onPress={() => navigation.navigate('Login')}

@@ -7,6 +7,7 @@ import Welcome from '@/screens/Welcome';
 import Login from '@/screens/Login';
 import TopAppBar from '@/components/TopAppBar/TopAppBar';
 import Checklist from '@/screens/Checklist';
+import SignUp from '@/screens/SignUp';
 import SupplierSelect from '@/screens/SupplierSelect';
 import SupplierList from '@/screens/SupplierList/SupplierList';
 import SupplierListAppBar from '@/components/SupplierListAppBar/SupplierListBar';
@@ -29,6 +30,11 @@ const Routes = () => (
         component={Login}
         options={{ headerShown: false }}
       />
+      <MainStack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{ headerShown: false }}
+        />
       <MainStack.Screen
         name="Dashboard"
         component={Dashboard}

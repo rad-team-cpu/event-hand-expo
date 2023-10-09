@@ -1,12 +1,6 @@
 import React, { memo, useState } from 'react';
 import { TouchableOpacity, StyleSheet, View } from 'react-native';
-import Background from '../../components/Background';
-import Logo from '../../components/Logo';
-import Header from '../../components/Header';
-// import Button from '../../components/Button';
-import TextInput from '../../components/TextInput';
-import BackButton from '../../components/BackButton';
-import {Linking, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import { LoginScreenProps } from '@/routes/types';
 import { useSignIn } from '@clerk/clerk-expo';
 import { getErrorMessage } from '@/core/utils';
@@ -16,7 +10,6 @@ import Button from '@/components/Button';
 import Input from '@/components/Input'; 
 import Text from '@/components/Text';
 import useTheme from '@/core/theme';
-import Checkbox from '@/components/Checkbox';
 // import axios from 'axios';
 
 const isAndroid = Platform.OS === 'android';
@@ -43,7 +36,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
     agreed: false,
   });
   const {assets, colors, gradients, sizes} = useTheme();
-
+  
 
   const _onLoginPressed = async () => {
     if (!isLoaded) {
@@ -80,7 +73,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
     }
   };
 
-  return (
+    return (
     <Block safe marginTop={sizes.md}>
       <Block paddingHorizontal={sizes.s}>
         <Block flex={0} style={{zIndex: 0}}>
@@ -114,7 +107,6 @@ const Login = ({ navigation }: LoginScreenProps) => {
             </Text>
           </Image>
         </Block>
-        {/* register form */}
         <Block
           keyboard
           behavior={!isAndroid ? 'padding' : 'height'}
@@ -123,7 +115,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
             flex={0}
             radius={sizes.sm}
             marginHorizontal="8%"
-            shadow={!isAndroid} // disabled shadow on Android due to blur overlay + elevation issue
+            shadow={!isAndroid} 
           >
             <Block
               blur
@@ -134,36 +126,6 @@ const Login = ({ navigation }: LoginScreenProps) => {
               justify="space-evenly"
               tint={colors.blurTint}
               paddingVertical={sizes.sm}>
-              <Text p semibold center>
-                Eventhand
-              </Text>
-              {/* social buttons */}
-              <Block row center justify="space-evenly" marginVertical={sizes.m}>
-                <Button outlined gray shadow={!isAndroid}>
-                  <Image
-                    source={assets.facebook}
-                    height={sizes.m}
-                    width={sizes.m}
-                    // color={isDark ? colors.icon : undefined}
-                  />
-                </Button>
-                <Button outlined gray shadow={!isAndroid}>
-                  <Image
-                    source={assets.apple}
-                    height={sizes.m}
-                    width={sizes.m}
-                    // color={isDark ? colors.icon : undefined}
-                  />
-                </Button>
-                <Button outlined gray shadow={!isAndroid}>
-                  <Image
-                    source={assets.google}
-                    height={sizes.m}
-                    width={sizes.m}
-                    // color={isDark ? colors.icon : undefined}
-                  />
-                </Button>
-              </Block>
               <Block
                 row
                 flex={0}
@@ -191,7 +153,6 @@ const Login = ({ navigation }: LoginScreenProps) => {
                   gradient={gradients.divider}
                 />
               </Block>
-              {/* form inputs */}
               <Block paddingHorizontal={sizes.sm}>
                 <Input
                   autoCapitalize="none"
@@ -228,29 +189,31 @@ const Login = ({ navigation }: LoginScreenProps) => {
                   // danger={Boolean(registration.password && !isValid.password)}
                 />
               </Block>
-              <View>
+              <Block marginBottom={sizes.sm}>
                 <TouchableOpacity onPress={() => navigation.navigate('Welcome')}>
-                  <Text>Forgot your password?</Text>
+                  <Text tertiary marginLeft={sizes.sm}>Forgot your password?</Text>
                 </TouchableOpacity>
-              </View>
-              {/* checkbox terms */}
+              </Block>
               <Button
                 primary
                 outlined
                 shadow={!isAndroid}
                 marginVertical={sizes.s}
                 marginHorizontal={sizes.sm}
-                onPress={_onLoginPressed}>
+                // onPress={_onLoginPressed}
+                onPress={() => navigation.navigate('Dashboard')}
+                >
+
                 <Text bold primary transform="uppercase">
                   Sign in
                 </Text>
               </Button>
-              <View>
-                <Text>Don’t have an account? </Text>
+              <Block >
+                <Text center>Don’t have an account? </Text>
                 <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                  <Text>Sign up</Text>
+                  <Text center primary>Sign up</Text>
                 </TouchableOpacity>
-              </View>
+              </Block>
             </Block>
           </Block>
         </Block>
@@ -301,6 +264,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
     // </Background>
   );
 };
+
 
 
 export default memo(Login);
