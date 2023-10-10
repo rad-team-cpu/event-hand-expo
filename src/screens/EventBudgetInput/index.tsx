@@ -1,13 +1,19 @@
 import { EventBudgetInputScreenProps } from '@/routes/types';
 import React, { useState } from 'react';
 import { GestureResponderEvent } from 'react-native';
-import { Text, TextInput, HelperText, Button } from 'react-native-paper';
+import { HelperText } from 'react-native-paper';
+import Text from '@/components/Text';
+import Input from '@/components/Input';
+import Button from '@/components/Button';
+import useTheme from '@/core/theme';
 
 const EventBudgetInput = (props: EventBudgetInputScreenProps) => {
   const { navigation } = props;
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [input, setInput] = useState<string>('');
+  const {assets, colors, gradients, sizes} = useTheme();
+
 
   const onChange = (text: string) => {
     if (!text.match(/^[1-9][0-9]*$/g)) {
@@ -33,44 +39,29 @@ const EventBudgetInput = (props: EventBudgetInputScreenProps) => {
 
   return (
     <>
-      <Text
-        variant="titleLarge"
-        style={{
-          justifyContent: 'center',
-        }}
-      >
-        Please enter your estimated budget
+      <Text h4 center primary margin={sizes.md}>
+        How much is your estimated budget?
       </Text>
-      <TextInput
-        mode="outlined"
-        placeholder="max. 1000000"
+      <Input
+        placeholder="max. P1,000,000"
         placeholderTextColor="#60605e"
         maxLength={7}
         keyboardType="number-pad"
         onChangeText={onChange}
-        error={error}
+        marginHorizontal={sizes.m}
+        // error={error}
       />
       <HelperText type="error" visible={error}>
         {errorMessage}
       </HelperText>
       <Button
         onPress={next}
-        mode="outlined"
-        buttonColor="#3D50DF"
-        textColor="white"
         disabled={error}
-        labelStyle={{ fontWeight: 'bold' }}
-        style={{
-          position: 'relative',
-          justifyContent: 'center',
-          margin: 16,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        }}
+        gradient={gradients.primary}
+        margin={sizes.md}
       >
-      <Text>
-        NEXT
+      <Text white bold transform="uppercase">
+        Next
       </Text>
       </Button>
     </>

@@ -275,9 +275,6 @@ export interface ThemeAssets {
   x5: ImageSourcePropType;
   gle: ImageSourcePropType;
   tesla: ImageSourcePropType;
-
-  ios: ImageSourcePropType;
-  android: ImageSourcePropType;
 }
 
 export interface ThemeFonts {

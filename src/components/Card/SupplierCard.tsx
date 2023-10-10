@@ -82,12 +82,12 @@ const SupplierCard = (props: SupplierCardProps) => {
           </Text>
         </Block>
         <Block row marginLeft={sizes.xs} marginBottom={sizes.xs}>
-        <Button flex={1} gradient={gradients.info} marginBottom={sizes.base} marginHorizontal={sizes.xs}>
+        <Button flex={1} gradient={gradients.info} marginBottom={sizes.base} marginHorizontal={sizes.xs} onPress={() => navigation.navigate('Profile')}>
           <Text white bold transform="uppercase">
             Message
           </Text>
         </Button>
-        <Button flex={1} gradient={gradients.primary} marginBottom={sizes.base} marginHorizontal={sizes.xs}  onPress={() => navigation.navigate('EventDateSelect')}>
+        <Button flex={1} gradient={gradients.primary} marginBottom={sizes.base} marginHorizontal={sizes.xs}  onPress={() => navigation.navigate('Profile')}>
           <Text white bold transform="uppercase">
             View
           </Text>

@@ -9,6 +9,7 @@ const Checkbox = ({
   onPress,
   haptic = true,
   id = 'Checkbox',
+  status = '',
   ...props
 }: ICheckboxProps) => {
   const {colors, icons, sizes} = useTheme();

@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Text, Button } from 'react-native-paper';
 import {
   DateTimePickerAndroid,
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { EventDateSelectScreenProps } from '@/routes/types';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Text from '@/components/Text';
+import Button from '@/components/Button';
+import useTheme from '@/core/theme';
 
 const EventDateSelect = (props: EventDateSelectScreenProps) => {
   const { navigation } = props;
+  const {assets, colors, gradients, sizes} = useTheme();
+
 
   const [date, setDate] = useState<Date | undefined>(undefined);
 
@@ -36,13 +40,8 @@ const EventDateSelect = (props: EventDateSelectScreenProps) => {
 
   return (
     <SafeAreaProvider>
-      <Text
-        variant="titleLarge"
-        style={{
-          justifyContent: 'center',
-        }}
-      >
-        When is the Date of your Event?
+      <Text h4 center primary margin={sizes.md}>
+        When is the date of your Event?
       </Text>
       <View
         style={{
@@ -53,32 +52,20 @@ const EventDateSelect = (props: EventDateSelectScreenProps) => {
         }}
       >
         <Button
-          mode="outlined"
-          buttonColor="#3D50DF"
-          textColor="white"
-          labelStyle={{ fontWeight: 'bold' }}
+          gradient={gradients.info}
           onPress={showDatepicker}
         >
+          <Text white bold transform="uppercase">
           {date ? date.toLocaleDateString() : 'Select a Date'}
+          </Text>
         </Button>
       </View>
       <Button
         onPress={() => navigation.navigate('EventBudgetInput')}
-        uppercase={false}
-        mode="outlined"
-        buttonColor="#3D50DF"
-        textColor="white"
         disabled={date == undefined}
-        labelStyle={{ fontWeight: 'bold' }}
-        style={{
-          position: 'absolute',
-          justifyContent: 'center',
-          margin: 16,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        }}
-      ><Text>
+        gradient={gradients.primary}
+        margin={sizes.md}
+      ><Text  white bold transform="uppercase">
         NEXT
         </Text>
       </Button>
