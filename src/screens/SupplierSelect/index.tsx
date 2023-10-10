@@ -1,8 +1,11 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
-import { Button, Text, Checkbox } from 'react-native-paper';
+import { Checkbox } from 'react-native-paper';
 import Slider from '@react-native-community/slider';
 import { SupplierSelectScreenProps } from '@/routes/types';
 import { GestureResponderEvent, View } from 'react-native';
+import Button from '@/components/Button';
+import Text from '@/components/Text';
+import useTheme from '@/core/theme';
 
 const SupplierSelect = (props: SupplierSelectScreenProps) => {
   const budget = 20000;
@@ -19,6 +22,8 @@ const SupplierSelect = (props: SupplierSelectScreenProps) => {
   const [supplierChecked, setSupplierChecked] = useState<boolean>(false);
   const [selectedAll, setSelectedAll] = useState<boolean>(false);
   const { navigation } = props;
+  const {assets, colors, gradients, sizes} = useTheme();
+
 
   const checkboxStatus = [
     venueChecked,
@@ -68,41 +73,48 @@ const SupplierSelect = (props: SupplierSelectScreenProps) => {
 
   return (
     <>
-      <Text
-        variant="headlineLarge"
-        style={{ textAlign: 'center', justifyContent: 'space-evenly' }}
+      <Text h4 center primary margin={sizes.md}
       >
-        {budget}
+        Total Budget: {budget}
       </Text>
       <View>
-        <View
-          style={{
+        <View style={{
             flexDirection: 'row',
-
+            alignItems: 'center',
             paddingHorizontal: 5,
+            marginBottom: 10, 
           }}
         >
-          <Text variant="titleLarge" style={{ margin: 5 }}>
+          <Checkbox status={is(selectedAll)} onPress={selectAll} />
+          <Text style={{
+              flex: 1,
+              fontSize: 16,
+            }}>
             Select All
           </Text>
-          <Checkbox status={is(selectedAll)} onPress={selectAll} />
+          
         </View>
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            alignItems: 'center',
             paddingHorizontal: 5,
+            marginBottom: 10, 
           }}
         >
-          <Text variant="titleLarge" style={{ margin: 5 }}>
-            Venue
-          </Text>
           <Checkbox
             status={is(venueChecked)}
             onPress={select(setVenueChecked)(venueChecked)}
           />
+          <Text style={{
+              flex: 1,
+              fontSize: 16,
+            }}>
+            Venue
+          </Text>
+
           <Slider
-            style={{ width: 200, height: 40 }}
+            style={{ width: 150, height: 40, flex:2 }}
             minimumValue={1}
             maximumValue={budget}
             value={venueAmount}
@@ -110,26 +122,37 @@ const SupplierSelect = (props: SupplierSelectScreenProps) => {
             minimumTrackTintColor="#3D50DF"
             maximumTrackTintColor="#000000"
             thumbTintColor="#FFFFFF"
+ 
             onValueChange={setAmount(setVenueAmount)}
           />
-          <Text style={{ margin: 5 }}>P{venueAmount}</Text>
+          <Text style={{
+            flex: 0,
+            marginHorizontal: 5,
+ 
+          }}>
+    P{venueAmount}</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingHorizontal: 5,
-          }}
-        >
-          <Text variant="titleLarge" style={{ margin: 5 }}>
-            Catering
-          </Text>
+        <View 
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingHorizontal: 5,
+          marginBottom: 10, 
+        }}
+          >
           <Checkbox
             status={is(cateringChecked)}
             onPress={select(setCateringChecked)(cateringChecked)}
           />
+          <Text style={{
+              flex: 1,
+              fontSize: 16,
+            }}>
+            Catering
+          </Text>
+
           <Slider
-            style={{ width: 200, height: 40 }}
+            style={{ width: 150, height: 40, flex: 2}}
             minimumValue={1}
             maximumValue={budget}
             value={cateringAmount}
@@ -139,24 +162,33 @@ const SupplierSelect = (props: SupplierSelectScreenProps) => {
             thumbTintColor="#FFFFFF"
             onValueChange={setAmount(setCateringAmount)}
           />
-          <Text style={{ margin: 5 }}>P{cateringAmount}</Text>
+        <Text style={{
+            flex: 0,
+            marginHorizontal: 5,
+
+          }}>P{cateringAmount}</Text>
         </View>
         <View
-          style={{
+           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            alignItems: 'center',
             paddingHorizontal: 5,
+            marginBottom: 10, 
           }}
         >
-          <Text variant="titleLarge" style={{ margin: 5 }}>
-            Photography
-          </Text>
           <Checkbox
             status={is(photographyChecked)}
             onPress={select(setPhotographyChecked)(photographyChecked)}
           />
+          <Text style={{
+              flex: 1,
+              fontSize: 16,
+            }}>
+            Photography
+          </Text>
+
           <Slider
-            style={{ width: 200, height: 40 }}
+            style={{ width: 150, height: 40, flex: 2}}
             minimumValue={1}
             maximumValue={budget}
             value={photographyAmount}
@@ -168,24 +200,33 @@ const SupplierSelect = (props: SupplierSelectScreenProps) => {
               setPhotographyAmount(Math.trunc(value));
             }}
           />
-          <Text style={{ margin: 5 }}>P{photographyAmount}</Text>
+        <Text style={{
+            flex: 0,
+            marginHorizontal: 5,
+ 
+          }}>P{photographyAmount}</Text>
         </View>
         <View
-          style={{
+           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            alignItems: 'center',
             paddingHorizontal: 5,
+            marginBottom: 10, 
           }}
         >
-          <Text variant="titleLarge" style={{ margin: 5 }}>
-            Decoration
-          </Text>
-          <Checkbox
+        <Checkbox
             status={is(decorationChecked)}
             onPress={select(setDecorationChecked)(decorationChecked)}
           />
+          <Text style={{
+              flex: 1,
+              fontSize: 16,
+            }}>
+            Decoration
+          </Text>
+
           <Slider
-            style={{ width: 200, height: 40 }}
+            style={{ width: 150, height: 40, flex:2 }}
             minimumValue={1}
             maximumValue={budget}
             value={decorationAmount}
@@ -195,24 +236,33 @@ const SupplierSelect = (props: SupplierSelectScreenProps) => {
             thumbTintColor="#FFFFFF"
             onValueChange={setAmount(setDecorationAmount)}
           />
-          <Text style={{ margin: 5 }}>P{decorationAmount}</Text>
+          <Text style={{
+            flex: 0,
+            marginHorizontal: 5,
+
+          }}>
+            P{decorationAmount}</Text>
         </View>
         <View
-          style={{
+           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            alignItems: 'center',
             paddingHorizontal: 5,
+            marginBottom: 10, 
           }}
-        >
-          <Text variant="titleLarge" style={{ margin: 5 }}>
+        ><Checkbox
+        status={is(videographyChecked)}
+        onPress={select(setVideographyChecked)(videographyChecked)}
+      />
+          <Text style={{
+              flex: 1,
+              fontSize: 10,
+            }}>
             Videography
           </Text>
-          <Checkbox
-            status={is(videographyChecked)}
-            onPress={select(setVideographyChecked)(videographyChecked)}
-          />
+
           <Slider
-            style={{ width: 200, height: 40 }}
+            style={{ width: 150, height: 40, flex: 2 }}
             minimumValue={1}
             maximumValue={budget}
             value={videographyAmount}
@@ -222,27 +272,22 @@ const SupplierSelect = (props: SupplierSelectScreenProps) => {
             thumbTintColor="#FFFFFF"
             onValueChange={setAmount(setVideographyAmount)}
           />
-          <Text style={{ margin: 5 }}>P{videographyAmount}</Text>
+        <Text style={{
+            flex: 0,
+            marginHorizontal: 5,
+             
+          }}>P{videographyAmount}</Text>
         </View>
       </View>
       <Button
         onPress={() => navigation.navigate('Checklist')}
-        uppercase={false}
-        mode="outlined"
-        buttonColor="#3D50DF"
-        textColor="white"
         disabled={disableButton}
-        labelStyle={{ fontWeight: 'bold' }}
-        style={{
-          position: 'absolute',
-          justifyContent: 'center',
-          margin: 16,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        }}
+        gradient={gradients.primary}
+        margin={sizes.md}
       >
+        <Text white bold transform="uppercase">
         NEXT
+        </Text>
       </Button>
     </>
   );
