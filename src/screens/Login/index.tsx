@@ -1,19 +1,18 @@
-import React, { memo, useState } from 'react';
-import { TouchableOpacity, StyleSheet, View } from 'react-native';
-import {Platform} from 'react-native';
+import React, { memo, useState, useCallback } from 'react';
+import { TouchableOpacity } from 'react-native';
+import { Platform } from 'react-native';
 import { LoginScreenProps } from '@/routes/types';
-import { useSignIn } from '@clerk/clerk-expo';
+import { useStytch } from '@stytch/react-native';
 import { getErrorMessage } from '@/core/utils';
 import Block from '@/components/Block';
 import Image from '@/components/Image';
 import Button from '@/components/Button';
-import Input from '@/components/Input'; 
+import Input from '@/components/Input';
 import Text from '@/components/Text';
 import useTheme from '@/core/theme';
 // import axios from 'axios';
 
 const isAndroid = Platform.OS === 'android';
-
 
 interface IRegistrationValidation {
   name: boolean;
@@ -23,8 +22,7 @@ interface IRegistrationValidation {
 }
 
 const Login = ({ navigation }: LoginScreenProps) => {
-  const { signIn, setActive, isLoaded } = useSignIn();
-  // const { getToken, isSignedIn } = useAuth();
+  const stytchClient = useStytch();
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
@@ -35,36 +33,19 @@ const Login = ({ navigation }: LoginScreenProps) => {
     password: false,
     agreed: false,
   });
-  const {assets, colors, gradients, sizes} = useTheme();
-  
+  const { assets, colors, gradients, sizes } = useTheme();
+
+  const authenticatePassword = useCallback(() => {
+    stytchClient.passwords.authenticate({
+      email: emailAddress,
+      password: password,
+      session_duration_minutes: 60,
+    });
+  }, [stytchClient]);
 
   const _onLoginPressed = async () => {
-    if (!isLoaded) {
-      return;
-    }
-
     try {
-      const completeSignIn = await signIn.create({
-        identifier: emailAddress,
-        password,
-      });
-      // This is an important step,
-      // This indicates the user is signed in
-      await setActive({ session: completeSignIn.createdSessionId });
-      // setError(false);
-      // const token = await getToken({ template: 'client' });
-      // console.log(isSignedIn);
-      // console.log(token);
-      // await axios
-      //   .get(`http://192.168.254.105:3000/`, {
-      //     headers: { Authorization: `Bearer ${token}` },
-      //   })
-      //   .then((response) => {
-      //     console.log(response.data);
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
+      authenticatePassword();
       navigation.navigate('Dashboard');
     } catch (err) {
       console.log(getErrorMessage(err));
@@ -73,29 +54,31 @@ const Login = ({ navigation }: LoginScreenProps) => {
     }
   };
 
-    return (
+  return (
     <Block safe marginTop={sizes.md}>
       <Block paddingHorizontal={sizes.s}>
-        <Block flex={0} style={{zIndex: 0}}>
+        <Block flex={0} style={{ zIndex: 0 }}>
           <Image
             background
             resizeMode="cover"
             padding={sizes.sm}
             radius={sizes.cardRadius}
             source={assets.background}
-            height={sizes.height * 0.3}>
+            height={sizes.height * 0.3}
+          >
             <Button
               row
               flex={0}
               justify="flex-start"
-              onPress={() => navigation.goBack()}>
+              onPress={() => navigation.goBack()}
+            >
               <Image
                 radius={0}
                 width={10}
                 height={18}
                 color={colors.white}
                 source={assets.arrow}
-                transform={[{rotate: '180deg'}]}
+                transform={[{ rotate: '180deg' }]}
               />
               <Text p white marginLeft={sizes.s}>
                 Go back
@@ -110,12 +93,13 @@ const Login = ({ navigation }: LoginScreenProps) => {
         <Block
           keyboard
           behavior={!isAndroid ? 'padding' : 'height'}
-          marginTop={-(sizes.height * 0.2 - sizes.l)}>
+          marginTop={-(sizes.height * 0.2 - sizes.l)}
+        >
           <Block
             flex={0}
             radius={sizes.sm}
             marginHorizontal="8%"
-            shadow={!isAndroid} 
+            shadow={!isAndroid}
           >
             <Block
               blur
@@ -125,14 +109,16 @@ const Login = ({ navigation }: LoginScreenProps) => {
               overflow="hidden"
               justify="space-evenly"
               tint={colors.blurTint}
-              paddingVertical={sizes.sm}>
+              paddingVertical={sizes.sm}
+            >
               <Block
                 row
                 flex={0}
                 align="center"
                 justify="center"
                 marginBottom={sizes.sm}
-                paddingHorizontal={sizes.xxl}>
+                paddingHorizontal={sizes.xxl}
+              >
                 <Block
                   flex={0}
                   height={1}
@@ -190,8 +176,12 @@ const Login = ({ navigation }: LoginScreenProps) => {
                 />
               </Block>
               <Block marginBottom={sizes.sm}>
-                <TouchableOpacity onPress={() => navigation.navigate('Welcome')}>
-                  <Text tertiary marginLeft={sizes.sm}>Forgot your password?</Text>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Welcome')}
+                >
+                  <Text tertiary marginLeft={sizes.sm}>
+                    Forgot your password?
+                  </Text>
                 </TouchableOpacity>
               </Block>
               <Button
@@ -200,18 +190,18 @@ const Login = ({ navigation }: LoginScreenProps) => {
                 shadow={!isAndroid}
                 marginVertical={sizes.s}
                 marginHorizontal={sizes.sm}
-                // onPress={_onLoginPressed}
-                onPress={() => navigation.navigate('Dashboard')}
-                >
-
+                onPress={_onLoginPressed}
+              >
                 <Text bold primary transform="uppercase">
                   Sign in
                 </Text>
               </Button>
-              <Block >
+              <Block>
                 <Text center>Don’t have an account? </Text>
                 <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                  <Text center primary>Sign up</Text>
+                  <Text center primary>
+                    Sign up
+                  </Text>
                 </TouchableOpacity>
               </Block>
             </Block>
@@ -264,7 +254,5 @@ const Login = ({ navigation }: LoginScreenProps) => {
     // </Background>
   );
 };
-
-
 
 export default memo(Login);

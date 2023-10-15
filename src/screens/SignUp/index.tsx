@@ -3,28 +3,74 @@ import { TouchableOpacity } from 'react-native';
 import { useSignUp } from '@clerk/clerk-expo';
 import { SignUpScreenProps } from '@/routes/types';
 import {Platform} from 'react-native';
-import { getErrorMessage } from '@/core/utils';
+import { useForm } from 'react-hook-form';
+import { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import Block from '@/components/Block';
 import Image from '@/components/Image';
 import Button from '@/components/Button';
-import Input from '@/components/Input'; 
 import Text from '@/components/Text';
 import useTheme from '@/core/theme';
+import DatePicker from '@/components/Datepicker';
+import { sub } from 'date-fns/fp';
+import FormTextInput from '@/components/FormTextInput';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { object, string, date } from 'yup';
+import axios from 'axios';
+import { format } from 'date-fns';
 
 const isAndroid = Platform.OS === 'android';
 
+const signUpValidationSchema = object().shape({
+  emailAddress: string()
+    .required('Please enter your email')
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      'Please enter a valid email',
+    ),
+  password: string()
+    .required('Please enter your password')
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d).{8,}$/,
+      'Your password must have at least one uppercase, a number, and least 8 characters long',
+    ),
+  lastName: string()
+    .required('Enter last name.')
+    .matches(/^[a-zA-Z]+$/, 'Please put a valid name'),
+  firstName: string()
+    .required('Enter first name.')
+    .matches(/^[a-zA-Z]+$/, 'Please put a valid name'),
+  contactNumber: string()
+    .required('Enter contact number.')
+    .matches(/^(09|\+639)\d{9}$/, 'Please enter a valid contact number.')
+    .length(11, 'Please eter a valid contact number'),
+  dateOfBirth: date()
+    .min(sub({ years: 100 })(new Date()), 'Must be at most 100 years old.')
+    .max(sub({ years: 18 })(new Date()), 'Must be at least 18 years old.')
+    .typeError('Enter Valid Date')
+    .required('Enter date of birth.'),
+});
 
 export default function SignUp({ navigation }: SignUpScreenProps) {
   const { isLoaded, signUp, setActive } = useSignUp();
+  const {
+    register,
+    control,
+    handleSubmit,
+    getValues,
+    trigger,
+    formState: { errors, isValid },
+  } = useForm({
+    mode: 'onSubmit',
+    resolver: yupResolver(signUpValidationSchema),
+  });
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
-  const [pendingVerification, setPendingVerification] = useState(false);
+  // const [pendingVerification, setPendingVerification] = useState(false);
   const [code, setCode] = useState('');
-  const {assets, colors, gradients, sizes} = useTheme();
-
+  const { assets, colors, gradients, sizes } = useTheme();
 
   // start the sign up process.
   const onSignUpPress = async () => {
@@ -97,108 +143,135 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
             </Text>
           </Button>
 
-          <Text h4 center white marginBottom={sizes.md}>
-            Create an Account
-          </Text>
-        </Image>
-      </Block>
-      <Block
-        keyboard
-        behavior={!isAndroid ? 'padding' : 'height'}
-        marginTop={-(sizes.height * 0.2 - sizes.l)}>
-      {!pendingVerification && (
+            <Text h4 center white marginBottom={sizes.md}>
+              Create an Account
+            </Text>
+          </Image>
+        </Block>
         <Block
-          flex={0}
-          radius={sizes.sm}
-          marginHorizontal="8%"
-          shadow={!isAndroid} // disabled shadow on Android due to blur overlay + elevation issue
+          keyboard
+          behavior={!isAndroid ? 'padding' : 'height'}
+          marginTop={-(sizes.height * 0.2 - sizes.l)}
         >
           <Block
-            blur
             flex={0}
-            intensity={90}
             radius={sizes.sm}
-            overflow="hidden"
-            justify="space-evenly"
-            tint={colors.blurTint}
-            paddingVertical={sizes.sm}>
-            {/* form inputs */}
-            <Block paddingHorizontal={sizes.sm}>
-              <Input
-                autoCapitalize="none"
-                label="Email"
-                returnKeyType="next"
-                value={emailAddress}
-                onChangeText={(text) => setEmailAddress(text)}
-                textContentType="emailAddress"
-                keyboardType="email-address"
-                placeholder="Email"
-                // success={Boolean(registration.name && isValid.name)}
-                // danger={Boolean(registration.name && !isValid.name)}
-                // onChangeText={(value) => handleChange({name: value})}
+            marginHorizontal="8%"
+            shadow={!isAndroid} // disabled shadow on Android due to blur overlay + elevation issue
+          >
+            <Block
+              blur
+              flex={0}
+              intensity={90}
+              radius={sizes.sm}
+              overflow="hidden"
+              justify="space-evenly"
+              tint={colors.blurTint}
+              paddingVertical={sizes.sm}
+            >
+              {/* form inputs */}
+              <Block paddingHorizontal={sizes.sm}>
+                <FormTextInput
+                  name="emailAddress"
+                  label="Email"
+                  placeholder="Email"
+                  control={control}
+                  register={register}
+                  errors={errors}
+                  iInputProps={{
+                    autoCapitalize: 'none',
+                    returnKeyType: 'next',
+                    textContentType: 'emailAddress',
+                    keyboardType: 'email-address',
+                  }}
+                />
+                <FormTextInput
+                  name="password"
+                  label="Password"
+                  placeholder="Password"
+                  control={control}
+                  register={register}
+                  errors={errors}
+                  iInputProps={{
+                    autoCapitalize: 'none',
+                    returnKeyType: 'next',
+                    secureTextEntry: true,
+                  }}
+                />
+                <FormTextInput
+                  name="firstName"
+                  label="First Name"
+                  placeholder="John"
+                  control={control}
+                  register={register}
+                  errors={errors}
+                  iInputProps={{
+                    returnKeyType: 'next',
+                  }}
+                />
+
+                <FormTextInput
+                  name="lastName"
+                  label="Last Name"
+                  placeholder="Doe"
+                  control={control}
+                  register={register}
+                  errors={errors}
+                  iInputProps={{
+                    returnKeyType: 'next',
+                  }}
+                />
+                <FormTextInput
+                  name="contactNumber"
+                  label="Contact Number"
+                  placeholder="09XXXXXXXXX"
+                  control={control}
+                  register={register}
+                  errors={errors}
+                  iInputProps={{
+                    keyboardType: 'number-pad',
+                  }}
+                />
+              </Block>
+              <DatePicker
+                name="birthDate"
+                control={control}
+                onValueChange={onDateChange}
+                display="spinner"
+                maximumDate={maxDate}
+                minimumDate={minDate}
+                // defaultValue={minDate}
+                label={
+                  date ? date.toLocaleDateString() : 'Select your date of birth'
+                }
+                register={register}
+                errors={errors}
+                iButtonProps={{
+                  primary: true,
+                  outlined: true,
+                  shadow: !isAndroid,
+                  marginVertical: sizes.s,
+                  marginHorizontal: sizes.sm,
+                }}
+                iTextprops={{
+                  bold: true,
+                  primary: true,
+                  transform: 'uppercase',
+                }}
               />
-              {/* <Input
-                autoCapitalize="none"
-                marginBottom={sizes.m}
-                label={t('common.email')}
-                keyboardType="email-address"
-                placeholder={t('common.emailPlaceholder')}
-                success={Boolean(registration.email && isValid.email)}
-                danger={Boolean(registration.email && !isValid.email)}
-                onChangeText={(value) => handleChange({email: value})}
-              /> */}
-              <Input
-                label="Password"
-                returnKeyType="next"
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                secureTextEntry
-                placeholder="Password"
-                // onChangeText={(value) => handleChange({password: value})}
-                // success={Boolean(registration.password && isValid.password)}
-                // danger={Boolean(registration.password && !isValid.password)}
-              />
-              <Input
-                label="First Name"
-                returnKeyType="next"
-                value={firstName}
-                onChangeText={(text) => setFirstName(text)}
-                placeholder="First Name"
-                // onChangeText={(value) => handleChange({password: value})}
-                // success={Boolean(registration.password && isValid.password)}
-                // danger={Boolean(registration.password && !isValid.password)}
-              />
-              <Input
-                label="Last Name"
-                returnKeyType="next"
-                value={lastName}
-                onChangeText={(text) => setLastName(text)}
-                placeholder="Last Name"
-                // onChangeText={(value) => handleChange({password: value})}
-                // success={Boolean(registration.password && isValid.password)}
-                // danger={Boolean(registration.password && !isValid.password)}
-              />
-               <Input
-                label="Contact Number"
-                returnKeyType="done"
-                value={contactNumber}
-                onChangeText={(text) => setContactNumber(text)}
-                // onChangeText={(value) => handleChange({password: value})}
-                // success={Boolean(registration.password && isValid.password)}
-                // danger={Boolean(registration.password && !isValid.password)}
-              />
-            </Block>
-            <Button
-              primary
-              outlined
-              shadow={!isAndroid}
-              marginVertical={sizes.s}
-              marginHorizontal={sizes.sm}
-              onPress={onSignUpPress}>
-              <Text bold primary transform="uppercase">
-                Sign up
-              </Text>
-            </Button>
+              <Button
+                primary
+                outlined
+                shadow={!isAndroid}
+                marginVertical={sizes.s}
+                marginHorizontal={sizes.sm}
+                // onPress={createPassword}
+                onPress={() => onSubmit()}
+              >
+                <Text bold primary transform="uppercase">
+                  Sign up
+                </Text>
+              </Button>
 
             <Block >
               <Text center>Already have an account? </Text>
