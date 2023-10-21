@@ -12,8 +12,7 @@ const EventBudgetInput = (props: EventBudgetInputScreenProps) => {
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [input, setInput] = useState<string>('');
-  const {assets, colors, gradients, sizes} = useTheme();
-
+  const { assets, colors, gradients, sizes } = useTheme();
 
   const onChange = (text: string) => {
     if (!text.match(/^[1-9][0-9]*$/g)) {
@@ -43,13 +42,15 @@ const EventBudgetInput = (props: EventBudgetInputScreenProps) => {
         How much is your estimated budget?
       </Text>
       <Input
-        placeholder="max. P1,000,000"
-        placeholderTextColor="#60605e"
-        maxLength={7}
-        keyboardType="number-pad"
-        onChangeText={onChange}
-        marginHorizontal={sizes.m}
-        // error={error}
+        mode="text"
+        iprops={{
+          placeholder: 'max. P1,000,000',
+          placeholderTextColor: '#60605e',
+          maxLength: 7,
+          keyboardType: 'number-pad',
+          onChangeText: onChange,
+          marginHorizontal: sizes.m,
+        }}
       />
       <HelperText type="error" visible={error}>
         {errorMessage}
@@ -60,9 +61,9 @@ const EventBudgetInput = (props: EventBudgetInputScreenProps) => {
         gradient={gradients.primary}
         margin={sizes.md}
       >
-      <Text white bold transform="uppercase">
-        Next
-      </Text>
+        <Text white bold transform="uppercase">
+          Next
+        </Text>
       </Button>
     </>
   );

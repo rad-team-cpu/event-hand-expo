@@ -38,7 +38,6 @@ const Login = ({ navigation }: LoginScreenProps) => {
   });
   const { assets, colors, sizes, gradients } = useTheme();
   const { signIn, setActive, isLoaded } = useSignIn();
-  const { userId } = useAuth();
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const submit = async (emailAddress: string, password: string) => {
@@ -196,6 +195,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
                   }}
                 />
                 <FormTextInput
+                  mode="password"
                   name="password"
                   label="Password"
                   placeholder="Password"
@@ -205,7 +205,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
                   iInputProps={{
                     autoCapitalize: 'none',
                     returnKeyType: 'next',
-                    secureTextEntry: true,
+                    // secureTextEntry: true,
                   }}
                 />
               </Block>

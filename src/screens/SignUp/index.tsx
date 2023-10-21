@@ -75,7 +75,7 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
   const [date, setDate] = useState<Date | undefined>(undefined);
 
   const minDate = sub({ years: 100 })(new Date());
-  const maxDate = sub({ years: 18 })(new Date());
+  const maxDate = sub({ years: 18, days: 1 })(new Date());
 
   const onDateSelect = (event: DateTimePickerEvent, selectedDate?: Date) => {
     if (selectedDate) {
@@ -236,6 +236,7 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
                   }}
                 />
                 <FormTextInput
+                  mode="password"
                   name="password"
                   label="Password"
                   placeholder="Password"
@@ -245,7 +246,7 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
                   iInputProps={{
                     autoCapitalize: 'none',
                     returnKeyType: 'next',
-                    secureTextEntry: true,
+                    // secureTextEntry: true,
                   }}
                 />
                 <FormTextInput
