@@ -48,7 +48,45 @@ function Verification({ navigation }: SignUpScreenProps) {
 
   const onPressVerify = handleSubmit(async (input) => {
     const { code } = input;
-    submit(code);
+    await submit(code).catch((err) => {
+      switch (err.status) {
+        case 400:
+          setErrorMessage('Sign up failed, please try again');
+          break;
+        case 401:
+          setErrorMessage('Sign up failed, please try again');
+          break;
+        case 403:
+          setErrorMessage(
+            'Server is unable to process your login, please try again later',
+          );
+          break;
+        case 404:
+          setErrorMessage('No internet connection');
+          break;
+        case 409:
+          setErrorMessage('Email is already in use');
+          break;
+        case 422:
+          setErrorMessage(
+            'The information you have entered is invalid\\missing',
+          );
+          break;
+        case 429:
+          setErrorMessage(
+            'Server is too busy to process your signup, please try again later',
+          );
+          break;
+        case 500:
+          setErrorMessage(
+            'Server was not able to process your signup, please try again later',
+          );
+          break;
+        default:
+          setErrorMessage('Something went wrong, please try again later');
+          break;
+      }
+    });
   });
 
   return (

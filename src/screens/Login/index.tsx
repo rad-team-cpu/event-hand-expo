@@ -87,6 +87,10 @@ const Login = ({ navigation }: LoginScreenProps) => {
           setErrorMessage(
             'Server was not able to process your signup, please try again later',
           );
+          break;
+        default:
+          setErrorMessage('Something went wrong, please try again later');
+          break;
       }
     });
   });
