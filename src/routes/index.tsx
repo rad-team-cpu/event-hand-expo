@@ -16,58 +16,69 @@ import EventType from '@/screens/EventType';
 import EventDateSelect from '@/screens/EventDateSelect';
 import EventBudgetInput from '@/screens/EventBudgetInput';
 import Profile from '@/screens/Profile';
+import Verification from '@/screens/Verification';
 
 const MainStack = createNativeStackNavigator<ScreenPropsList>();
 
-const Routes = () => (
-  <NavigationContainer>
-    <SignedIn>
-      <MainStack.Navigator>
-        <MainStack.Screen
-          name="Dashboard"
-          component={Dashboard}
-          options={{ header: TopAppBar }}
-        />
-        <MainStack.Screen
-          name="Profile"
-          component={Profile}
-          options={{ headerShown: false }}
-        />
-        <MainStack.Screen name="EventType" component={EventType} />
-        <MainStack.Screen name="EventDateSelect" component={EventDateSelect} />
-        <MainStack.Screen
-          name="EventBudgetInput"
-          component={EventBudgetInput}
-        />
-        <MainStack.Screen name="SupplierSelect" component={SupplierSelect} />
-        <MainStack.Screen name="Checklist" component={Checklist} />
-        <MainStack.Screen
-          name="SupplierList"
-          component={SupplierList}
-          options={{ header: SupplierListAppBar }}
-        />
-      </MainStack.Navigator>
-    </SignedIn>
-    <SignedOut>
-      <MainStack.Navigator>
-        <MainStack.Screen
-          name="Welcome"
-          component={Welcome}
-          options={{ headerShown: false }}
-        />
-        <MainStack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }}
-        />
-        <MainStack.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{ headerShown: false }}
-        />
-      </MainStack.Navigator>
-    </SignedOut>
-  </NavigationContainer>
-);
+const Routes = () => {
+  return (
+    <NavigationContainer>
+      <SignedIn>
+        <MainStack.Navigator>
+          <MainStack.Screen
+            name="Dashboard"
+            component={Dashboard}
+            options={{ header: TopAppBar }}
+          />
+          <MainStack.Screen
+            name="Profile"
+            component={Profile}
+            options={{ headerShown: false }}
+          />
+          <MainStack.Screen name="EventType" component={EventType} />
+          <MainStack.Screen
+            name="EventDateSelect"
+            component={EventDateSelect}
+          />
+          <MainStack.Screen
+            name="EventBudgetInput"
+            component={EventBudgetInput}
+          />
+          <MainStack.Screen name="SupplierSelect" component={SupplierSelect} />
+          <MainStack.Screen name="Checklist" component={Checklist} />
+          <MainStack.Screen
+            name="SupplierList"
+            component={SupplierList}
+            options={{ header: SupplierListAppBar }}
+          />
+        </MainStack.Navigator>
+      </SignedIn>
+      <SignedOut>
+        <MainStack.Navigator>
+          <MainStack.Screen
+            name="Welcome"
+            component={Welcome}
+            options={{ headerShown: false }}
+          />
+          <MainStack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+          <MainStack.Screen
+            name="SignUp"
+            component={SignUp}
+            options={{ headerShown: false }}
+          />
+          <MainStack.Screen
+            name="Verification"
+            component={Verification}
+            options={{ headerShown: false }}
+          />
+        </MainStack.Navigator>
+      </SignedOut>
+    </NavigationContainer>
+  );
+};
 
 export default Routes;

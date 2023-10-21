@@ -11,6 +11,7 @@ import { MaterialBottomTabScreenProps } from '@react-navigation/material-bottom-
 type ScreenPropsList = {
   Welcome: undefined;
   SignUp: undefined;
+  Verification: undefined;
   Login: undefined;
   Dashboard: undefined;
   Profile: undefined;
@@ -25,6 +26,11 @@ type ScreenPropsList = {
 type WelcomeScreenProps = NativeStackScreenProps<ScreenPropsList, 'Welcome'>;
 
 type SignUpScreenProps = NativeStackScreenProps<ScreenPropsList, 'SignUp'>;
+
+type VerificationScreenProps = NativeStackScreenProps<
+  ScreenPropsList,
+  'Verification'
+>;
 
 type LoginScreenProps = NativeStackScreenProps<ScreenPropsList, 'Login'>;
 
@@ -97,6 +103,7 @@ export {
   ScreenPropsList,
   WelcomeScreenProps,
   SignUpScreenProps,
+  VerificationScreenProps,
   LoginScreenProps,
   DashboardScreenProps,
   ProfileScreenProps,

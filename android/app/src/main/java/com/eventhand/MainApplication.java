@@ -1,4 +1,4 @@
-package com.eventhandexpo;
+package com.eventhand;
 
 import android.app.Application;
 import android.content.res.Configuration;

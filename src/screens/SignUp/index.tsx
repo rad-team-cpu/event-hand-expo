@@ -2,21 +2,30 @@ import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useSignUp } from '@clerk/clerk-expo';
 import { SignUpScreenProps } from '@/routes/types';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
-import { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import Block from '@/components/Block';
 import Image from '@/components/Image';
 import Button from '@/components/Button';
 import Text from '@/components/Text';
 import useTheme from '@/core/theme';
-import DatePicker from '@/components/Datepicker';
-import { sub } from 'date-fns/fp';
 import FormTextInput from '@/components/FormTextInput';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string, date } from 'yup';
-import axios from 'axios';
-import { format } from 'date-fns';
+import { HelperText } from 'react-native-paper';
+import DatePicker from '@/components/Datepicker';
+import { sub } from 'date-fns/fp';
+import { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import format from 'date-fns/format';
+
+interface SignUpInput {
+  emailAddress: string;
+  password: string;
+  lastName: string;
+  firstName: string;
+  contactNumber: string;
+  birthDate: Date;
+}
 
 const isAndroid = Platform.OS === 'android';
 
@@ -42,8 +51,8 @@ const signUpValidationSchema = object().shape({
   contactNumber: string()
     .required('Enter contact number.')
     .matches(/^(09|\+639)\d{9}$/, 'Please enter a valid contact number.')
-    .length(11, 'Please eter a valid contact number'),
-  dateOfBirth: date()
+    .length(11, 'Please enter a valid contact number'),
+  birthDate: date()
     .min(sub({ years: 100 })(new Date()), 'Must be at most 100 years old.')
     .max(sub({ years: 18 })(new Date()), 'Must be at least 18 years old.')
     .typeError('Enter Valid Date')
@@ -51,97 +60,135 @@ const signUpValidationSchema = object().shape({
 });
 
 export default function SignUp({ navigation }: SignUpScreenProps) {
-  const { isLoaded, signUp, setActive } = useSignUp();
+  const { isLoaded, signUp } = useSignUp();
   const {
     register,
     control,
     handleSubmit,
-    getValues,
-    trigger,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     mode: 'onSubmit',
     resolver: yupResolver(signUpValidationSchema),
   });
-  const [emailAddress, setEmailAddress] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
-  // const [pendingVerification, setPendingVerification] = useState(false);
-  const [code, setCode] = useState('');
-  const { assets, colors, gradients, sizes } = useTheme();
+  const { assets, colors, sizes } = useTheme();
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [date, setDate] = useState<Date | undefined>(undefined);
+
+  const minDate = sub({ years: 100 })(new Date());
+  const maxDate = sub({ years: 18 })(new Date());
+
+  const onDateSelect = (event: DateTimePickerEvent, selectedDate?: Date) => {
+    if (selectedDate) {
+      const currentDate = selectedDate;
+      setDate(currentDate);
+    }
+  };
+
+  const signUpFlow = async (input: SignUpInput) => {
+    if (!isLoaded) {
+      return;
+    }
+
+    const {
+      emailAddress,
+      password,
+      lastName,
+      firstName,
+      contactNumber,
+      birthDate,
+    } = input;
+    console.log(birthDate);
+    console.log(`${format(birthDate, 'MM/dd/yyyy')}`);
+
+    const unsafeMetadata = {
+      contactNumber: contactNumber,
+      birthDate: format(birthDate, 'MM/dd/yyyy'),
+      type: 'CLIENT',
+      role: null,
+    };
+
+    await signUp.create({
+      emailAddress,
+      password,
+      lastName,
+      firstName,
+      unsafeMetadata,
+    });
+    await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
+
+    navigation.navigate('Verification');
+  };
 
   // start the sign up process.
-  const onSignUpPress = async () => {
-    if (!isLoaded) {
-      return;
-    }
-
-    try {
-      await signUp.create({
-        emailAddress,
-        password,
-        firstName,
-        lastName,
-      });
-
-      // send the email.
-      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
-
-      // change the UI to our pending section.
-      setPendingVerification(true);
-    } catch (err) {
-      console.error(JSON.stringify(getErrorMessage(err), null, 2));
-    }
-  };
-
-  // This verifies the user using email code that is delivered.
-  const onPressVerify = async () => {
-    if (!isLoaded) {
-      return;
-    }
-
-    try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code,
-      });
-
-      await setActive({ session: completeSignUp.createdSessionId });
-      navigation.navigate('Dashboard');
-    } catch (err) {
-      console.error(JSON.stringify(getErrorMessage(err), null, 2));
-    }
-  };
+  const onSignUpPress = handleSubmit(async (input) => {
+    await signUpFlow(input).catch((err) => {
+      console.log(JSON.stringify(err));
+      switch (err.status) {
+        case 400:
+          setErrorMessage('Sign up failed, please try again');
+          break;
+        case 401:
+          setErrorMessage('Sign up failed, please try again');
+          break;
+        case 403:
+          setErrorMessage(
+            'Server is unable to process your login, please try again later',
+          );
+          break;
+        case 404:
+          setErrorMessage('No internet connection');
+          break;
+        case 409:
+          setErrorMessage('Email is already in use');
+          break;
+        case 422:
+          setErrorMessage(
+            'The information you have entered is invalid\\missing',
+          );
+          break;
+        case 429:
+          setErrorMessage(
+            'Server is too busy to process your signup, please try again later',
+          );
+          break;
+        case 500:
+          setErrorMessage(
+            'Server was not able to process your signup, please try again later',
+          );
+      }
+    });
+  });
 
   return (
-  <Block safe marginTop={sizes.md}>
-    <Block paddingHorizontal={sizes.s}>
-      <Block flex={0} style={{zIndex: 0}}>
-        <Image
-          background
-          resizeMode="cover"
-          padding={sizes.sm}
-          radius={sizes.cardRadius}
-          source={assets.background}
-          height={sizes.height * 0.3}>
-          <Button
-            row
-            flex={0}
-            justify="flex-start"
-            onPress={() => navigation.goBack()}>
-            <Image
-              radius={0}
-              width={10}
-              height={18}
-              color={colors.white}
-              source={assets.arrow}
-              transform={[{rotate: '180deg'}]}
-            />
-            <Text p white marginLeft={sizes.s}>
-              Go back
-            </Text>
-          </Button>
+    <Block safe marginTop={sizes.md}>
+      <Block paddingHorizontal={sizes.s}>
+        <Block flex={0} style={{ zIndex: 0 }}>
+          <Image
+            background
+            resizeMode="cover"
+            padding={sizes.sm}
+            radius={sizes.cardRadius}
+            source={assets.background}
+            height={sizes.height * 0.3}
+          >
+            <Button
+              row
+              flex={0}
+              justify="flex-start"
+              onPress={() => navigation.goBack()}
+            >
+              <Image
+                radius={0}
+                width={10}
+                height={18}
+                color={colors.white}
+                source={assets.arrow}
+                transform={[{ rotate: '180deg' }]}
+              />
+              <Text p white marginLeft={sizes.s}>
+                Go back
+              </Text>
+            </Button>
 
             <Text h4 center white marginBottom={sizes.md}>
               Create an Account
@@ -236,14 +283,11 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
               <DatePicker
                 name="birthDate"
                 control={control}
-                onValueChange={onDateChange}
+                onValueChange={onDateSelect}
                 display="spinner"
                 maximumDate={maxDate}
                 minimumDate={minDate}
-                // defaultValue={minDate}
-                label={
-                  date ? date.toLocaleDateString() : 'Select your date of birth'
-                }
+                label={date ? date.toLocaleDateString() : 'Date of birth'}
                 register={register}
                 errors={errors}
                 iButtonProps={{
@@ -265,143 +309,28 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
                 shadow={!isAndroid}
                 marginVertical={sizes.s}
                 marginHorizontal={sizes.sm}
-                // onPress={createPassword}
-                onPress={() => onSubmit()}
+                onPress={onSignUpPress}
+                // onPress={() => navigation.navigate('Verification')}
               >
                 <Text bold primary transform="uppercase">
                   Sign up
                 </Text>
               </Button>
-
-            <Block >
-              <Text center>Already have an account? </Text>
-              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text primary center>Sign in</Text>
-              </TouchableOpacity>
+              <HelperText type="error" visible={true}>
+                {errorMessage}
+              </HelperText>
+              <Block>
+                <Text center>Already have an account? </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                  <Text primary center>
+                    Sign in
+                  </Text>
+                </TouchableOpacity>
+              </Block>
             </Block>
           </Block>
         </Block>
-      )}
-     {pendingVerification && (
-      <Block>
-        <Block>
-          <Block>
-            <Input
-              value={code}
-              placeholder="Code"
-              onChangeText={(code) => setCode(code)}
-            />
-          </Block>
-          <Button onPress={onPressVerify}>
-            <Text>
-            Verify Email
-            </Text>
-          </Button>
-        </Block>
-      <Block>
-        <Text>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text>Sign in</Text>
-        </TouchableOpacity>
       </Block>
     </Block>
-     )}
-      </Block>
-    </Block>
-  </Block>
-
-
-
-    // <Background>
-    //   <BackButton goBack={() => navigation.goBack()} />
-
-    //   <Logo />
-
-    //   <Header>Create Account</Header>
-    //   <View>
-    //     {!pendingVerification && (
-    //       <View>
-    //         <View>
-    //           <TextInput
-    //             label="Email"
-    //             autoCapitalize="none"
-    //             value={emailAddress}
-    //             placeholder="Email"
-    //             returnKeyType="next"
-    //             onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
-    //             textContentType="emailAddress"
-    //             keyboardType="email-address"
-    //           />
-    //         </View>
-
-    //         <View>
-    //           <TextInput
-    //             value={password}
-    //             placeholder="Password"
-    //             secureTextEntry={true}
-    //             onChangeText={(password) => setPassword(password)}
-    //           />
-    //         </View>
-    //         <View>
-    //           <TextInput
-    //             value={firstName}
-    //             placeholder="John"
-    //             secureTextEntry={true}
-    //             onChangeText={(firstName) => setFirstName(firstName)}
-    //           />
-    //         </View>
-    //         <View>
-    //           <TextInput
-    //             value={lastName}
-    //             placeholder="Doe"
-    //             secureTextEntry={true}
-    //             onChangeText={(lastName) => setLastName(lastName)}
-    //           />
-    //         </View>
-    //         <View>
-    //           <TextInput
-    //             value={contactNumber}
-    //             placeholder="0923747836"
-    //             secureTextEntry={true}
-    //             onChangeText={(contactNumber) =>
-    //               setContactNumber(contactNumber)
-    //             }
-    //           />
-    //         </View>
-
-    //         <Button
-    //           onPress={onSignUpPress}
-    //         >
-    //           <Text>
-    //           Sign Up
-    //           </Text>
-    //         </Button>
-    //       </View>
-    //     )}
-    //   </View>
-    //   {pendingVerification && (
-    //     <View>
-    //       <View>
-    //         <TextInput
-    //           value={code}
-    //           placeholder="Code"
-    //           onChangeText={(code) => setCode(code)}
-    //         />
-    //       </View>
-    //       <Button onPress={onPressVerify}>
-    //         <Text>
-    //         Verify Email
-    //         </Text>
-    //       </Button>
-    //     </View>
-    //   )}
-    //   <View>
-    //     <Text>Already have an account? </Text>
-    //     <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-    //       <Text>Sign in</Text>
-    //     </TouchableOpacity>
-    //   </View>
-    // </Background>
   );
 }
-

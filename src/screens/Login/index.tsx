@@ -1,58 +1,95 @@
-import React, { memo, useState, useCallback } from 'react';
+import React, { memo, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Platform } from 'react-native';
 import { LoginScreenProps } from '@/routes/types';
-import { useStytch } from '@stytch/react-native';
-import { getErrorMessage } from '@/core/utils';
 import Block from '@/components/Block';
 import Image from '@/components/Image';
 import Button from '@/components/Button';
-import Input from '@/components/Input';
 import Text from '@/components/Text';
 import useTheme from '@/core/theme';
-// import axios from 'axios';
+import { useAuth, useSignIn } from '@clerk/clerk-expo';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { object, string } from 'yup';
+import FormTextInput from '@/components/FormTextInput';
+import { HelperText } from 'react-native-paper';
 
 const isAndroid = Platform.OS === 'android';
 
-interface IRegistrationValidation {
-  name: boolean;
-  email: boolean;
-  password: boolean;
-  agreed: boolean;
-}
+const signUpValidationSchema = object().shape({
+  emailAddress: string()
+    .required('Please enter your email')
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      'Please enter a valid email',
+    ),
+  password: string().required('Please enter your password'),
+});
 
 const Login = ({ navigation }: LoginScreenProps) => {
-  const stytchClient = useStytch();
-  const [emailAddress, setEmailAddress] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isValid, setIsValid] = useState<IRegistrationValidation>({
-    name: false,
-    email: false,
-    password: false,
-    agreed: false,
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: 'onSubmit',
+    resolver: yupResolver(signUpValidationSchema),
   });
-  const { assets, colors, gradients, sizes } = useTheme();
+  const { assets, colors, sizes, gradients } = useTheme();
+  const { signIn, setActive, isLoaded } = useSignIn();
+  const { userId } = useAuth();
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const authenticatePassword = useCallback(() => {
-    stytchClient.passwords.authenticate({
-      email: emailAddress,
-      password: password,
-      session_duration_minutes: 60,
-    });
-  }, [stytchClient]);
-
-  const _onLoginPressed = async () => {
-    try {
-      authenticatePassword();
-      navigation.navigate('Dashboard');
-    } catch (err) {
-      console.log(getErrorMessage(err));
-      setError(true);
-      setErrorMessage(getErrorMessage);
+  const submit = async (emailAddress: string, password: string) => {
+    if (!isLoaded) {
+      return;
     }
+
+    const completeSignIn = await signIn.create({
+      identifier: emailAddress,
+      password,
+    });
+    // This is an important step,
+    // This indicates the user is signed in
+    await setActive({ session: completeSignIn.createdSessionId });
   };
+
+  const onLoginPressed = handleSubmit(async (input) => {
+    const { emailAddress, password } = input;
+    await submit(emailAddress, password).catch((err) => {
+      switch (err.status) {
+        case 400:
+          setErrorMessage('SignUp failed, please try again');
+          break;
+        case 403:
+          setErrorMessage(
+            'Server is unable to process your login, please try again later',
+          );
+          break;
+        case 404:
+          setErrorMessage('No internet connection');
+          break;
+        case 409:
+          setErrorMessage('Email is already in use');
+          break;
+        case 422:
+          setErrorMessage(
+            'The information you have entered is invalid\\missing',
+          );
+          break;
+        case 429:
+          setErrorMessage(
+            'Server is too busy to process your signup, please try again later',
+          );
+          break;
+        case 500:
+          setErrorMessage(
+            'Server was not able to process your signup, please try again later',
+          );
+      }
+    });
+  });
 
   return (
     <Block safe marginTop={sizes.md}>
@@ -140,39 +177,32 @@ const Login = ({ navigation }: LoginScreenProps) => {
                 />
               </Block>
               <Block paddingHorizontal={sizes.sm}>
-                <Input
-                  autoCapitalize="none"
-                  marginBottom={sizes.m}
+                <FormTextInput
+                  name="emailAddress"
                   label="Email"
-                  returnKeyType="next"
-                  value={emailAddress}
-                  onChangeText={(text) => setEmailAddress(text)}
-                  textContentType="emailAddress"
-                  keyboardType="email-address"
-                  placeholder="Name"
-                  // success={Boolean(registration.name && isValid.name)}
-                  // danger={Boolean(registration.name && !isValid.name)}
-                  // onChangeText={(value) => handleChange({name: value})}
+                  placeholder="Email"
+                  control={control}
+                  register={register}
+                  errors={errors}
+                  iInputProps={{
+                    autoCapitalize: 'none',
+                    returnKeyType: 'next',
+                    textContentType: 'emailAddress',
+                    keyboardType: 'email-address',
+                  }}
                 />
-                {/* <Input
-                  autoCapitalize="none"
-                  marginBottom={sizes.m}
-                  label={t('common.email')}
-                  keyboardType="email-address"
-                  placeholder={t('common.emailPlaceholder')}
-                  success={Boolean(registration.email && isValid.email)}
-                  danger={Boolean(registration.email && !isValid.email)}
-                  onChangeText={(value) => handleChange({email: value})}
-                /> */}
-                <Input
+                <FormTextInput
+                  name="password"
                   label="Password"
-                  returnKeyType="done"
-                  value={password}
-                  onChangeText={(text) => setPassword(text)}
-                  secureTextEntry
-                  // onChangeText={(value) => handleChange({password: value})}
-                  // success={Boolean(registration.password && isValid.password)}
-                  // danger={Boolean(registration.password && !isValid.password)}
+                  placeholder="Password"
+                  control={control}
+                  register={register}
+                  errors={errors}
+                  iInputProps={{
+                    autoCapitalize: 'none',
+                    returnKeyType: 'next',
+                    secureTextEntry: true,
+                  }}
                 />
               </Block>
               <Block marginBottom={sizes.sm}>
@@ -190,12 +220,15 @@ const Login = ({ navigation }: LoginScreenProps) => {
                 shadow={!isAndroid}
                 marginVertical={sizes.s}
                 marginHorizontal={sizes.sm}
-                onPress={_onLoginPressed}
+                onPress={onLoginPressed}
               >
                 <Text bold primary transform="uppercase">
                   Sign in
                 </Text>
               </Button>
+              <HelperText type="error" visible={true}>
+                {errorMessage}
+              </HelperText>
               <Block>
                 <Text center>Don’t have an account? </Text>
                 <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
@@ -209,49 +242,6 @@ const Login = ({ navigation }: LoginScreenProps) => {
         </Block>
       </Block>
     </Block>
-    // <Background>
-    //   <BackButton goBack={() => navigation.goBack()} />
-
-    //   <Logo />
-
-    //   <Header>Welcome back!</Header>
-
-    //   <TextInput
-    //     label="Email"
-    //     returnKeyType="next"
-    //     value={emailAddress}
-    //     onChangeText={(text) => setEmailAddress(text)}
-    //     error={error}
-    //     autoCapitalize="none"
-    //     textContentType="emailAddress"
-    //     keyboardType="email-address"
-    //   />
-    //   <TextInput
-    //     label="Password"
-    //     returnKeyType="done"
-    //     value={password}
-    //     onChangeText={(text) => setPassword(text)}
-    //     error={error}
-    //     errorText={errorMessage}
-    //     secureTextEntry
-    //   />
-    //   <View>
-    //     <TouchableOpacity onPress={() => navigation.navigate('Welcome')}>
-    //       <Text>Forgot your password?</Text>
-    //     </TouchableOpacity>
-    //   </View>
-
-    //   <Button onPress={_onLoginPressed}>
-    //     Login
-    //   </Button>
-
-    //   <View>
-    //     <Text>Don’t have an account? </Text>
-    //     <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-    //       <Text>Sign up</Text>
-    //     </TouchableOpacity>
-    //   </View>
-    // </Background>
   );
 };
 

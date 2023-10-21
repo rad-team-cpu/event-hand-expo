@@ -24,10 +24,10 @@ const tokenCache = {
 function App() {
   return (
     <ClerkProvider
-      tokenCache={tokenCache}
-      publishableKey={Constants.expoConfig!.extra!.clerkPublishableKey}
+      // tokenCache={tokenCache}
+      publishableKey={`${process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}`}
     >
-        <Routes />
+      <Routes />
     </ClerkProvider>
   );
 }
