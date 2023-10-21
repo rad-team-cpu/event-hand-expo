@@ -10,6 +10,7 @@ import {
 } from 'react-hook-form';
 
 type FormTextInputProps = {
+  mode: 'text' | 'password';
   name: string;
   id?: string;
   label?: string;
@@ -24,7 +25,7 @@ type FormTextInputProps = {
   iInputProps: IInputProps;
 };
 
-const FormTextInput = (props: FormTextInputProps) => {
+const FormTextInput = ({ mode = 'text', ...props }: FormTextInputProps) => {
   const {
     name,
     placeholder,
@@ -54,13 +55,20 @@ const FormTextInput = (props: FormTextInputProps) => {
         return (
           <>
             <Input
-              label={label}
-              onChangeText={onValueChange}
-              placeholder={placeholder}
-              {...iInputProps}
+              mode={mode}
+              iprops={{
+                label: label,
+                onChangeText: onValueChange,
+                placeholder: placeholder,
+                ...iInputProps,
+              }}
+              // label={label}
+              // onChangeText={onValueChange}
+              // placeholder={placeholder}
+              // {...iInputProps}
               // success={Boolean(registration.name && isValid.name)}
               // danger={Boolean(registration.name && !isValid.name)}
-              // onChangeText={(value) => handleChange({name: value})}
+              // onChangeText={(value) => handleChange({name: value})}:
             />
             <HelperText type="error" visible={errorState ?? !!errors[name]}>
               {errorMessage ?? errors[name]?.message}

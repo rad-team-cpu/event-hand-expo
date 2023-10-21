@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Image,
   TextInput,
@@ -7,47 +7,57 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Block from './Block';
 import Text from './Text';
 
-
-import {IInputProps} from '../constants/types';
+import { IInputProps } from '../constants/types';
 import useTheme from '@/core/theme';
 
-const Input = ({
-  id = 'Input',
-  style,
-  color,
-  primary,
-  secondary,
-  tertiary,
-  black,
-  white,
-  gray,
-  danger,
-  warning,
-  success,
-  info,
-  search,
-  disabled,
-  label,
-  icon,
-  marginBottom,
-  marginTop,
-  marginHorizontal,
-  marginVertical,
-  marginRight,
-  marginLeft,
-  onFocus,
-  onBlur,
-  ...props
-}: IInputProps) => {
-  const {assets, colors, sizes} = useTheme();
+interface CustomInputProps {
+  mode: 'text' | 'password';
+  iprops: IInputProps;
+}
+
+const Input = ({ mode, iprops }: CustomInputProps) => {
+  const { assets, colors, sizes } = useTheme();
   const [isFocused, setFocused] = useState(false);
+  const [secureTextEntry, setSecureTextEntry] = useState(false);
+  const {
+    id = 'Input',
+    style,
+    color,
+    primary,
+    secondary,
+    tertiary,
+    black,
+    white,
+    gray,
+    danger,
+    warning,
+    success,
+    info,
+    search,
+    disabled,
+    label,
+    icon,
+    marginBottom,
+    marginTop,
+    marginHorizontal,
+    marginVertical,
+    marginRight,
+    marginLeft,
+    onFocus,
+    onBlur,
+  } = iprops;
+
+  const toggleShowPassword = () => {
+    setSecureTextEntry(!secureTextEntry);
+  };
 
   const handleFocus = useCallback(
-    (event:any, focus:any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (event: any, focus: any) => {
       setFocused(focus);
       focus && onFocus?.(event);
       !focus && onBlur?.(event);
@@ -86,12 +96,12 @@ const Input = ({
     style,
     {
       minHeight: sizes.inputHeight,
-      ...(marginBottom && {marginBottom: marginBottom}),
-      ...(marginTop && {marginTop: marginTop}),
-      ...(marginHorizontal && {marginHorizontal: marginHorizontal}),
-      ...(marginVertical && {marginVertical: marginVertical}),
-      ...(marginRight && {marginRight: marginRight}),
-      ...(marginLeft && {marginLeft: marginLeft}),
+      ...(marginBottom && { marginBottom: marginBottom }),
+      ...(marginTop && { marginTop: marginTop }),
+      ...(marginHorizontal && { marginHorizontal: marginHorizontal }),
+      ...(marginVertical && { marginVertical: marginVertical }),
+      ...(marginRight && { marginRight: marginRight }),
+      ...(marginLeft && { marginLeft: marginLeft }),
     },
   ]) as ViewStyle;
 
@@ -117,7 +127,7 @@ const Input = ({
 
   // generate component testID or accessibilityLabel based on Platform.OS
   const inputID =
-    Platform.OS === 'android' ? {accessibilityLabel: id} : {testID: id};
+    Platform.OS === 'android' ? { accessibilityLabel: id } : { testID: id };
 
   return (
     <Block flex={0} style={inputBoxStyles}>
@@ -130,24 +140,37 @@ const Input = ({
         {search && assets.search && (
           <Image
             source={assets.search}
-            style={{marginLeft: sizes.inputPadding, tintColor: colors.icon}}
+            style={{ marginLeft: sizes.inputPadding, tintColor: colors.icon }}
           />
         )}
         {icon && (
           <Image
             source={assets?.[icon]}
-            style={{marginLeft: sizes.inputPadding, tintColor: colors.icon}}
+            style={{ marginLeft: sizes.inputPadding, tintColor: colors.icon }}
           />
         )}
         <TextInput
           {...inputID}
-          {...props}
+          {...iprops}
+          secureTextEntry={!secureTextEntry}
           style={inputStyles}
           editable={!disabled}
           placeholderTextColor={inputColor}
           onFocus={(event) => handleFocus(event, true)}
           onBlur={(event) => handleFocus(event, false)}
         />
+        {mode == 'password' && (
+          <MaterialCommunityIcons
+            name={secureTextEntry ? 'eye-off' : 'eye'}
+            size={24}
+            color="#aaa"
+            style={{
+              marginRight: sizes.s,
+            }}
+            onPress={toggleShowPassword}
+          />
+        )}
+
         {danger && assets.warning && (
           <Image
             source={assets.warning}
