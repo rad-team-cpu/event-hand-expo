@@ -2,8 +2,11 @@ import React from 'react';
 import { Provider } from 'react-native-paper';
 import Routes from '@/routes';
 import { ClerkProvider } from '@clerk/clerk-expo';
+import {useFonts} from 'expo-font';
+import AppLoading from 'expo-app-loading';
 import Constants from 'expo-constants';
 import SecureStore from 'expo-secure-store';
+import useTheme from './core/theme';
 
 const tokenCache = {
   async getToken(key: string) {
@@ -22,6 +25,19 @@ const tokenCache = {
   },
 };
 function App() {
+  const { assets } = useTheme();
+  
+  const [fontsLoaded] = useFonts({
+    'OpenSans-Light': assets.OpenSansLight,
+    'OpenSans-Regular': assets.OpenSansRegular,
+    'OpenSans-SemiBold': assets.OpenSansSemiBold,
+    'OpenSans-ExtraBold': assets.OpenSansExtraBold,
+    'OpenSans-Bold': assets.OpenSansBold,
+  });
+  
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
   return (
     <ClerkProvider
       // tokenCache={tokenCache}

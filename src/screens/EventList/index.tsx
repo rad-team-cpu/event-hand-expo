@@ -43,17 +43,17 @@ enum Event {
 
 const data = [
   {
-    key: '1',
+    key: 'Wedding',
     name: faker.company.name(),
     eventType: faker.helpers.enumValue(Event),
   },
   {
-    key: '2',
+    key: 'Baptismal',
     name: faker.company.name(),
     eventType: faker.helpers.enumValue(Event),
   },
   {
-    key: '3',
+    key: 'Birthday',
     name: faker.company.name(),
     eventType: faker.helpers.enumValue(Event),
   },

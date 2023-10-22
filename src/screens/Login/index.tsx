@@ -209,7 +209,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
                   }}
                 />
               </Block>
-              <Block marginBottom={sizes.sm}>
+              {/* <Block marginBottom={sizes.sm}>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('Welcome')}
                 >
@@ -217,7 +217,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
                     Forgot your password?
                   </Text>
                 </TouchableOpacity>
-              </Block>
+              </Block> */}
               <Button
                 primary
                 outlined

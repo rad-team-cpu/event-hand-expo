@@ -15,6 +15,7 @@ type ScreenPropsList = {
   Login: undefined;
   Dashboard: undefined;
   Profile: undefined;
+  ClientProfile: undefined;
   EventDateSelect: undefined;
   EventType: undefined;
   EventBudgetInput: undefined;
@@ -40,6 +41,9 @@ type DashboardScreenProps = NativeStackScreenProps<
 >;
 
 type ProfileScreenProps = NativeStackScreenProps<ScreenPropsList, 'Profile'>;
+
+type ClientProfileScreenProps = NativeStackScreenProps<ScreenPropsList, 'ClientProfile'>;
+
 
 type DashboardScreenNavigationProp = NativeStackNavigationProp<
   ScreenPropsList,
@@ -81,7 +85,7 @@ type DashboardTabScreenPropsList = {
   EventList: undefined;
   Inbox: undefined;
   Notifications: undefined;
-  Profile: undefined;
+  ClientProfile: undefined;
 };
 
 type EventListScreenProps = CompositeScreenProps<
@@ -107,6 +111,7 @@ export {
   LoginScreenProps,
   DashboardScreenProps,
   ProfileScreenProps,
+  ClientProfileScreenProps,
   DashboardScreenNavigationProp,
   EventListScreenProps,
   EventDateSelectScreenProps,

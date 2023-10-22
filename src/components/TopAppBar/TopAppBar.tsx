@@ -17,7 +17,7 @@ const TopAppBar = (props: NativeStackHeaderProps) => {
       />
       <Appbar.Action
         icon="account"
-        onPress={() => navigation.navigate('Profile')}
+        onPress={() => navigation.navigate('ClientProfile')}
         color="#3D50DF"
       />
     </Appbar.Header>

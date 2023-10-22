@@ -9,7 +9,6 @@ import Button from '@/components/Button';
 import useTheme from '@/core/theme';
 import { useData } from '@/core/useData';
 
-const isAndroid = Platform.OS === 'android';
 
 const Profile = () => {
   const {user} = useData();
@@ -134,7 +133,6 @@ const Profile = () => {
           <Block
             flex={0}
             radius={sizes.sm}
-            shadow={!isAndroid} // disabled shadow on Android due to blur overlay + elevation issue
             marginTop={-sizes.l}
             marginHorizontal="8%"
             color="rgba(255,255,255,0.2)">

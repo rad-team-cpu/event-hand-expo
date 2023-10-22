@@ -27,7 +27,6 @@ interface SignUpInput {
   birthDate: Date;
 }
 
-const isAndroid = Platform.OS === 'android';
 
 const signUpValidationSchema = object().shape({
   emailAddress: string()
@@ -200,14 +199,13 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
         </Block>
         <Block
           keyboard
-          behavior={!isAndroid ? 'padding' : 'height'}
           marginTop={-(sizes.height * 0.2 - sizes.l)}
         >
           <Block
             flex={0}
             radius={sizes.sm}
             marginHorizontal="8%"
-            shadow={!isAndroid} // disabled shadow on Android due to blur overlay + elevation issue
+           
           >
             <Block
               blur
@@ -297,7 +295,6 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
                 iButtonProps={{
                   primary: true,
                   outlined: true,
-                  shadow: !isAndroid,
                   marginVertical: sizes.s,
                   marginHorizontal: sizes.sm,
                 }}
@@ -310,7 +307,6 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
               <Button
                 primary
                 outlined
-                shadow={!isAndroid}
                 marginVertical={sizes.s}
                 marginHorizontal={sizes.sm}
                 onPress={onSignUpPress}
