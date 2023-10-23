@@ -97,8 +97,6 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
       contactNumber,
       birthDate,
     } = input;
-    console.log(birthDate);
-    console.log(`${format(birthDate, 'MM/dd/yyyy')}`);
 
     const unsafeMetadata = {
       contactNumber: contactNumber,
@@ -122,7 +120,6 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
   // start the sign up process.
   const onSignUpPress = handleSubmit(async (input) => {
     await signUpFlow(input).catch((err) => {
-      console.log(JSON.stringify(err));
       switch (err.status) {
         case 400:
           setErrorMessage('Sign up failed, please try again');
