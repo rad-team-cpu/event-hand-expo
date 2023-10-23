@@ -17,6 +17,7 @@ import DatePicker from '@/components/Datepicker';
 import { sub } from 'date-fns/fp';
 import { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import format from 'date-fns/format';
+import Loading from '@/components/Loading';
 
 interface SignUpInput {
   emailAddress: string;
@@ -73,6 +74,7 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
   const { assets, colors, sizes } = useTheme();
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [date, setDate] = useState<Date | undefined>(undefined);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const minDate = sub({ years: 100 })(new Date());
   const maxDate = sub({ years: 18, days: 1 })(new Date());
@@ -119,6 +121,7 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
 
   // start the sign up process.
   const onSignUpPress = handleSubmit(async (input) => {
+    setLoading(true);
     await signUpFlow(input).catch((err) => {
       switch (err.status) {
         case 400:
@@ -159,6 +162,10 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
       }
     });
   });
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Block safe marginTop={sizes.md}>

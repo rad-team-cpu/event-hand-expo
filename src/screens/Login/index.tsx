@@ -13,6 +13,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
 import FormTextInput from '@/components/FormTextInput';
 import { HelperText } from 'react-native-paper';
+import Loading from '@/components/Loading';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -39,6 +40,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
   const { assets, colors, sizes, gradients } = useTheme();
   const { signIn, setActive, isLoaded } = useSignIn();
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const submit = async (emailAddress: string, password: string) => {
     if (!isLoaded) {
@@ -55,6 +57,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
   };
 
   const onLoginPressed = handleSubmit(async (input) => {
+    setLoading(true);
     const { emailAddress, password } = input;
     await submit(emailAddress, password).catch((err) => {
       switch (err.status) {
@@ -93,6 +96,10 @@ const Login = ({ navigation }: LoginScreenProps) => {
       }
     });
   });
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Block safe marginTop={sizes.md}>

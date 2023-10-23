@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSignUp } from '@clerk/clerk-expo';
 import { SignUpScreenProps } from '@/routes/types';
 import { Platform } from 'react-native';
@@ -12,6 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
 import { HelperText } from 'react-native-paper';
 import { useForm } from 'react-hook-form';
+import Loading from '@/components/Loading';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -31,6 +32,7 @@ function Verification({ navigation }: SignUpScreenProps) {
     mode: 'onSubmit',
     resolver: yupResolver(signUpValidationSchema),
   });
+  const [loading, setLoading] = useState<boolean>(false);
 
   // start the sign up process.
 
@@ -48,6 +50,7 @@ function Verification({ navigation }: SignUpScreenProps) {
 
   const onPressVerify = handleSubmit(async (input) => {
     const { code } = input;
+    setLoading(true);
     await submit(code).catch((err) => {
       switch (err.status) {
         case 400:
@@ -88,6 +91,10 @@ function Verification({ navigation }: SignUpScreenProps) {
       }
     });
   });
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Block safe marginTop={sizes.md}>
