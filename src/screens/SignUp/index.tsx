@@ -104,7 +104,7 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
       contactNumber: contactNumber,
       birthDate: format(birthDate, 'MM/dd/yyyy'),
       type: 'CLIENT',
-      role: null,
+      role: 'CLIENT',
     };
 
     await signUp.create({
@@ -122,6 +122,7 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
   // start the sign up process.
   const onSignUpPress = handleSubmit(async (input) => {
     await signUpFlow(input).catch((err) => {
+      console.log(JSON.stringify(err));
       switch (err.status) {
         case 400:
           setErrorMessage('Sign up failed, please try again');
