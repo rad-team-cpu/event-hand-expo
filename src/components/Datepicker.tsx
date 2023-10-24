@@ -65,7 +65,6 @@ const DatePicker = (props: DatePickerProps) => {
               if (onValueChange) {
                 onValueChange(event, selectedDate);
               }
-              console.log(format(selectedDate, 'MM/dd/yyyy'));
               onChange(selectedDate);
             }
           };
