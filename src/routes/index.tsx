@@ -9,14 +9,14 @@ import Login from '@/screens/Login';
 import TopAppBar from '@/components/TopAppBar/TopAppBar';
 import SignUp from '@/screens/SignUp';
 import SupplierSelect from '@/screens/SupplierSelect';
-import SupplierList from '@/screens/SupplierList/SupplierList';
 import SupplierListAppBar from '@/components/SupplierListAppBar/SupplierListBar';
 import EventType from '@/screens/EventType';
 import EventDateSelect from '@/screens/EventDateSelect';
 import EventBudgetInput from '@/screens/EventBudgetInput';
-import Profile from '@/screens/Profile';
 import Verification from '@/screens/Verification';
 import ClientProfile from '@/screens/ClientProfile';
+import Profile from '@/screens/SupplierProfile';
+import SupplierList from '@/screens/SupplierList';
 
 const MainStack = createNativeStackNavigator<ScreenPropsList>();
 
