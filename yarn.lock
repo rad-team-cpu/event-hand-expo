@@ -2609,6 +2609,11 @@
   resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.43.tgz#8660dd1e0e5fd979395e2f999e670cdb9484d1e9"
   integrity sha512-wqxfwHk83RS7+6OpytGdo5wqkqtvx+bGaIs1Rwm5NrtQHUfL4OgWs/5p0OipmjmT+fexePh37Ek+mqIpdNjQKA==
 
+"@types/i18n-js@^3.8.7":
+  version "3.8.7"
+  resolved "https://registry.yarnpkg.com/@types/i18n-js/-/i18n-js-3.8.7.tgz#4081f249da7a9fa54de7a9fc3fcebcd19ffcc001"
+  integrity sha512-NFQR1FDTVq0y41o4JLPjZABStuyGoNooazTiO/Up5QjuN26Hshh63QxvStNR9GcvffLjTgk1CFGRizDg2s5nkg==
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.5.tgz#fdfdd69fa16d530047d9963635bd77c71a08c068"

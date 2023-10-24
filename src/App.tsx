@@ -3,10 +3,10 @@ import { PaperProvider } from 'react-native-paper';
 import Routes from '@/routes';
 import { ClerkProvider } from '@clerk/clerk-expo';
 import { useFonts } from 'expo-font';
-import AppLoading from 'expo-app-loading';
-import Constants from 'expo-constants';
-import SecureStore from 'expo-secure-store';
+// import Constants from 'expo-constants';
+// import SecureStore from 'expo-secure-store';
 import useTheme from './core/theme';
+import Loading from './components/Loading';
 
 // const tokenCache = {
 //   async getToken(key: string) {
@@ -37,8 +37,9 @@ function App() {
   });
 
   if (!fontsLoaded) {
-    return <AppLoading />;
+    return <Loading />;
   }
+
   return (
     <PaperProvider>
       <ClerkProvider

@@ -8,17 +8,11 @@ import Text from '../Text';
 import Button from '../Button';
 import { useNavigation } from '@react-navigation/native';
 import { DashboardScreenNavigationProp } from '@/routes/types';
-enum Event {
-  'Wedding',
-  'Birthday',
-  'Baptismal',
-}
 
 interface EventCardProps {
   key?: string;
   name: string;
   eventType: string;
-  // avatar: string;
   // avatar: string;
   // coverImage: string;
   //   averageRating: number;

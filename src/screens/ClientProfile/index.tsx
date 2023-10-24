@@ -1,17 +1,19 @@
-import React, {useCallback} from 'react';
-import {Platform, Linking} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
-import {useNavigation} from '@react-navigation/core';
+import React, { useCallback } from 'react';
+import { Platform, Linking } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/core';
 import Block from '@/components/Block';
 import Image from '@/components/Image';
 import Text from '@/components/Text';
 import Button from '@/components/Button';
 import useTheme from '@/core/theme';
 import { ClientProfileScreenProps } from '@/routes/types';
+import { useUser } from '@clerk/clerk-expo';
 
 const ClientProfile = (props: ClientProfileScreenProps) => {
   const navigation = useNavigation();
-  const {assets, colors, sizes} = useTheme();
+  const { isLoaded, user } = useUser();
+  const { assets, colors, sizes } = useTheme();
   const IMAGE_SIZE = (sizes.width - (sizes.padding + sizes.sm) * 2) / 3;
   const IMAGE_VERTICAL_SIZE =
     (sizes.width - (sizes.padding + sizes.sm) * 2) / 2;
@@ -19,6 +21,9 @@ const ClientProfile = (props: ClientProfileScreenProps) => {
   const IMAGE_VERTICAL_MARGIN =
     (sizes.width - (IMAGE_VERTICAL_SIZE + sizes.sm) * 2) / 2;
 
+  if (!isLoaded) {
+    return;
+  }
 
   return (
     <Block safe marginTop={sizes.md}>
@@ -26,7 +31,8 @@ const ClientProfile = (props: ClientProfileScreenProps) => {
         scroll
         paddingHorizontal={sizes.s}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: sizes.padding}}>
+        contentContainerStyle={{ paddingBottom: sizes.padding }}
+      >
         <Block flex={0}>
           <Image
             background
@@ -34,19 +40,21 @@ const ClientProfile = (props: ClientProfileScreenProps) => {
             padding={sizes.sm}
             paddingBottom={sizes.l}
             radius={sizes.cardRadius}
-            source={assets.background}>
+            source={assets.background}
+          >
             <Button
               row
               flex={0}
               justify="flex-start"
-              onPress={() => navigation.goBack()}>
+              onPress={() => navigation.goBack()}
+            >
               <Image
                 radius={0}
                 width={10}
                 height={18}
                 color={colors.white}
                 source={assets.arrow}
-                transform={[{rotate: '180deg'}]}
+                transform={[{ rotate: '180deg' }]}
               />
               <Text p white marginLeft={sizes.s}>
                 {/* {profile.title} */}
@@ -57,10 +65,12 @@ const ClientProfile = (props: ClientProfileScreenProps) => {
               <Image
                 width={64}
                 height={64}
-                marginBottom={sizes.sm} source={0}              />
+                marginBottom={sizes.sm}
+                source={0}
+              />
               <Text h3 center white>
                 {/* {user?.name} */}
-                Rasheen Rabino
+                {user?.fullName}
               </Text>
             </Block>
           </Image>
@@ -71,7 +81,8 @@ const ClientProfile = (props: ClientProfileScreenProps) => {
             radius={sizes.sm}
             marginTop={-sizes.l}
             marginHorizontal="8%"
-            color="rgba(255,255,255,0.2)">
+            color="rgba(255,255,255,0.2)"
+          >
             <Block
               row
               blur
@@ -82,11 +93,12 @@ const ClientProfile = (props: ClientProfileScreenProps) => {
               tint={colors.blurTint}
               justify="space-evenly"
               paddingVertical={sizes.sm}
-              renderToHardwareTextureAndroid>
-                <Block align="flex-start" marginLeft={sizes.sm}>
-                    <Text h5>Name</Text>
-                    <Text>Rasheen Rabino</Text>
-                </Block>
+              renderToHardwareTextureAndroid
+            >
+              <Block align="flex-start" marginLeft={sizes.sm}>
+                <Text h5>Name</Text>
+                <Text>{user?.fullName}</Text>
+              </Block>
             </Block>
             <Block
               row
@@ -98,11 +110,12 @@ const ClientProfile = (props: ClientProfileScreenProps) => {
               tint={colors.blurTint}
               justify="space-evenly"
               paddingVertical={sizes.sm}
-              renderToHardwareTextureAndroid>
-                <Block align="flex-start" marginLeft={sizes.sm}>
-                    <Text h5>Email</Text>
-                    <Text>rasheencrabino@gmail.com</Text>
-                </Block>
+              renderToHardwareTextureAndroid
+            >
+              <Block align="flex-start" marginLeft={sizes.sm}>
+                <Text h5>Email</Text>
+                <Text>{user?.emailAddresses[0].emailAddress}</Text>
+              </Block>
             </Block>
             <Block
               row
@@ -114,11 +127,12 @@ const ClientProfile = (props: ClientProfileScreenProps) => {
               tint={colors.blurTint}
               justify="space-evenly"
               paddingVertical={sizes.sm}
-              renderToHardwareTextureAndroid>
-                <Block align="flex-start" marginLeft={sizes.sm}>
-                    <Text h5>Contact Number</Text>
-                    <Text>09566661733</Text>
-                </Block>
+              renderToHardwareTextureAndroid
+            >
+              <Block align="flex-start" marginLeft={sizes.sm}>
+                <Text h5>Contact Number</Text>
+                <Text>{user?.unsafeMetadata.contactNumber as string}</Text>
+              </Block>
             </Block>
             <Block
               row
@@ -130,11 +144,12 @@ const ClientProfile = (props: ClientProfileScreenProps) => {
               tint={colors.blurTint}
               justify="space-evenly"
               paddingVertical={sizes.sm}
-              renderToHardwareTextureAndroid>
-                <Block align="flex-start" marginLeft={sizes.sm}>
-                    <Text h5>Birthday</Text>
-                    <Text>06/24/2000</Text>
-                </Block>
+              renderToHardwareTextureAndroid
+            >
+              <Block align="flex-start" marginLeft={sizes.sm}>
+                <Text h5>Birthday</Text>
+                <Text>{user?.unsafeMetadata.birthDate as string}</Text>
+              </Block>
             </Block>
           </Block>
         </Block>
