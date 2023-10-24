@@ -152,7 +152,7 @@ const Input = ({ mode, iprops }: CustomInputProps) => {
         <TextInput
           {...inputID}
           {...iprops}
-          secureTextEntry={!secureTextEntry}
+          secureTextEntry={mode == 'password' && !secureTextEntry}
           style={inputStyles}
           editable={!disabled}
           placeholderTextColor={inputColor}

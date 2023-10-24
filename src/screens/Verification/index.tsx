@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSignUp } from '@clerk/clerk-expo';
-import { SignUpScreenProps } from '@/routes/types';
+import { VerificationScreenProps } from '@/routes/types';
 import { Platform } from 'react-native';
 import Block from '@/components/Block';
 import Image from '@/components/Image';
@@ -11,13 +11,19 @@ import FormTextInput from '@/components/FormTextInput';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
 import { HelperText } from 'react-native-paper';
-import { useForm } from 'react-hook-form';
+import {
+  useForm,
+  Control,
+  UseFormRegister,
+  FieldValues,
+} from 'react-hook-form';
+import Loading from '@/components/Loading';
 
 const signUpValidationSchema = object().shape({
   code: string().required('Enter contact number.'),
 });
 
-function Verification({ navigation }: SignUpScreenProps) {
+function Verification({ navigation }: VerificationScreenProps) {
   const { isLoaded, signUp, setActive } = useSignUp();
   const { assets, colors, sizes } = useTheme();
   const {
@@ -29,6 +35,8 @@ function Verification({ navigation }: SignUpScreenProps) {
     mode: 'onSubmit',
     resolver: yupResolver(signUpValidationSchema),
   });
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   // start the sign up process.
 
@@ -46,7 +54,9 @@ function Verification({ navigation }: SignUpScreenProps) {
 
   const onPressVerify = handleSubmit(async (input) => {
     const { code } = input;
+    setLoading(true);
     await submit(code).catch((err) => {
+      setLoading(false);
       switch (err.status) {
         case 400:
           setErrorMessage('Sign up failed, please try again');
@@ -87,6 +97,10 @@ function Verification({ navigation }: SignUpScreenProps) {
     });
   });
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <Block safe marginTop={sizes.md}>
       <Block paddingHorizontal={sizes.s}>
@@ -119,7 +133,7 @@ function Verification({ navigation }: SignUpScreenProps) {
             </Button>
 
             <Text h4 center white marginBottom={sizes.md}>
-              Create an Account
+              Enter Verification Code
             </Text>
           </Image>
         </Block>
@@ -143,8 +157,8 @@ function Verification({ navigation }: SignUpScreenProps) {
                 name="code"
                 label="Verification"
                 placeholder="Enter Code here"
-                control={control}
-                register={register}
+                control={control as unknown as Control<FieldValues, unknown>}
+                register={register as unknown as UseFormRegister<FieldValues>}
                 errors={errors}
                 iInputProps={{
                   keyboardType: 'number-pad',
@@ -156,13 +170,15 @@ function Verification({ navigation }: SignUpScreenProps) {
                   outlined
                   marginVertical={sizes.s}
                   marginHorizontal={sizes.sm}
-                  // onPress={onSignUpPress}
                   onPress={onPressVerify}
                 >
                   <Text bold primary transform="uppercase">
-                    Sign up
+                    Submit
                   </Text>
                 </Button>
+                <HelperText type="error" visible={true}>
+                  {errorMessage}
+                </HelperText>
               </Block>
             </Block>
           </Block>

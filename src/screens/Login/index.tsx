@@ -7,12 +7,18 @@ import Image from '@/components/Image';
 import Button from '@/components/Button';
 import Text from '@/components/Text';
 import useTheme from '@/core/theme';
-import { useAuth, useSignIn } from '@clerk/clerk-expo';
-import { useForm } from 'react-hook-form';
+import { useSignIn } from '@clerk/clerk-expo';
+import {
+  useForm,
+  FieldValues,
+  Control,
+  UseFormRegister,
+} from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
 import FormTextInput from '@/components/FormTextInput';
 import { HelperText } from 'react-native-paper';
+import Loading from '@/components/Loading';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -39,6 +45,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
   const { assets, colors, sizes, gradients } = useTheme();
   const { signIn, setActive, isLoaded } = useSignIn();
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const submit = async (emailAddress: string, password: string) => {
     if (!isLoaded) {
@@ -55,8 +62,10 @@ const Login = ({ navigation }: LoginScreenProps) => {
   };
 
   const onLoginPressed = handleSubmit(async (input) => {
+    setLoading(true);
     const { emailAddress, password } = input;
     await submit(emailAddress, password).catch((err) => {
+      setLoading(false);
       switch (err.status) {
         case 400:
           setErrorMessage('SignUp failed, please try again');
@@ -93,6 +102,10 @@ const Login = ({ navigation }: LoginScreenProps) => {
       }
     });
   });
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Block safe marginTop={sizes.md}>
@@ -184,8 +197,8 @@ const Login = ({ navigation }: LoginScreenProps) => {
                   name="emailAddress"
                   label="Email"
                   placeholder="Email"
-                  control={control}
-                  register={register}
+                  control={control as unknown as Control<FieldValues, unknown>}
+                  register={register as unknown as UseFormRegister<FieldValues>}
                   errors={errors}
                   iInputProps={{
                     autoCapitalize: 'none',
@@ -199,8 +212,8 @@ const Login = ({ navigation }: LoginScreenProps) => {
                   name="password"
                   label="Password"
                   placeholder="Password"
-                  control={control}
-                  register={register}
+                  control={control as unknown as Control<FieldValues, unknown>}
+                  register={register as unknown as UseFormRegister<FieldValues>}
                   errors={errors}
                   iInputProps={{
                     autoCapitalize: 'none',
