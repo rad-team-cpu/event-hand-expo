@@ -10,7 +10,7 @@ import {
 } from 'react-hook-form';
 
 type FormTextInputProps = {
-  mode: 'text' | 'password';
+  mode?: 'text' | 'password';
   name: string;
   id?: string;
   label?: string;
