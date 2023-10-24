@@ -123,6 +123,7 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
   const onSignUpPress = handleSubmit(async (input) => {
     setLoading(true);
     await signUpFlow(input).catch((err) => {
+      setLoading(false);
       switch (err.status) {
         case 400:
           setErrorMessage('Sign up failed, please try again');

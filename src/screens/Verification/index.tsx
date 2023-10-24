@@ -53,6 +53,7 @@ function Verification({ navigation }: SignUpScreenProps) {
     const { code } = input;
     setLoading(true);
     await submit(code).catch((err) => {
+      setLoading(false);
       switch (err.status) {
         case 400:
           setErrorMessage('Sign up failed, please try again');
