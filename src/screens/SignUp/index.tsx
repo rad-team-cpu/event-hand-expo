@@ -3,7 +3,12 @@ import { TouchableOpacity } from 'react-native';
 import { useSignUp } from '@clerk/clerk-expo';
 import { SignUpScreenProps } from '@/routes/types';
 import { Platform } from 'react-native';
-import { useForm } from 'react-hook-form';
+import {
+  useForm,
+  FieldValues,
+  Control,
+  UseFormRegister,
+} from 'react-hook-form';
 import Block from '@/components/Block';
 import Image from '@/components/Image';
 import Button from '@/components/Button';
@@ -19,7 +24,7 @@ import { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import format from 'date-fns/format';
 import Loading from '@/components/Loading';
 
-interface SignUpInput {
+interface SignUpInput extends FieldValues {
   emailAddress: string;
   password: string;
   lastName: string;
@@ -67,7 +72,7 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<SignUpInput, unknown>({
     mode: 'onSubmit',
     resolver: yupResolver(signUpValidationSchema),
   });
@@ -231,8 +236,8 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
                   name="emailAddress"
                   label="Email"
                   placeholder="Email"
-                  control={control}
-                  register={register}
+                  control={control as unknown as Control<FieldValues, unknown>}
+                  register={register as unknown as UseFormRegister<FieldValues>}
                   errors={errors}
                   iInputProps={{
                     autoCapitalize: 'none',
@@ -246,8 +251,8 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
                   name="password"
                   label="Password"
                   placeholder="Password"
-                  control={control}
-                  register={register}
+                  control={control as unknown as Control<FieldValues, unknown>}
+                  register={register as unknown as UseFormRegister<FieldValues>}
                   errors={errors}
                   iInputProps={{
                     autoCapitalize: 'none',
@@ -259,8 +264,8 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
                   name="firstName"
                   label="First Name"
                   placeholder="John"
-                  control={control}
-                  register={register}
+                  control={control as unknown as Control<FieldValues, unknown>}
+                  register={register as unknown as UseFormRegister<FieldValues>}
                   errors={errors}
                   iInputProps={{
                     returnKeyType: 'next',
@@ -271,8 +276,8 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
                   name="lastName"
                   label="Last Name"
                   placeholder="Doe"
-                  control={control}
-                  register={register}
+                  control={control as unknown as Control<FieldValues, unknown>}
+                  register={register as unknown as UseFormRegister<FieldValues>}
                   errors={errors}
                   iInputProps={{
                     returnKeyType: 'next',
@@ -282,8 +287,8 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
                   name="contactNumber"
                   label="Contact Number"
                   placeholder="09XXXXXXXXX"
-                  control={control}
-                  register={register}
+                  control={control as unknown as Control<FieldValues, unknown>}
+                  register={register as unknown as UseFormRegister<FieldValues>}
                   errors={errors}
                   iInputProps={{
                     keyboardType: 'number-pad',
@@ -292,13 +297,13 @@ export default function SignUp({ navigation }: SignUpScreenProps) {
               </Block>
               <DatePicker
                 name="birthDate"
-                control={control}
+                control={control as unknown as Control<FieldValues, unknown>}
+                register={register as unknown as UseFormRegister<FieldValues>}
                 onValueChange={onDateSelect}
                 display="spinner"
                 maximumDate={maxDate}
                 minimumDate={minDate}
                 label={date ? date.toLocaleDateString() : 'Date of birth'}
-                register={register}
                 errors={errors}
                 iButtonProps={{
                   primary: true,
