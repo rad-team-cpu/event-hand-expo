@@ -33,6 +33,7 @@ function Verification({ navigation }: SignUpScreenProps) {
     resolver: yupResolver(signUpValidationSchema),
   });
   const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   // start the sign up process.
 
@@ -128,7 +129,7 @@ function Verification({ navigation }: SignUpScreenProps) {
             </Button>
 
             <Text h4 center white marginBottom={sizes.md}>
-              Create an Account
+              Enter Verification Code
             </Text>
           </Image>
         </Block>
@@ -167,13 +168,15 @@ function Verification({ navigation }: SignUpScreenProps) {
                   shadow={!isAndroid}
                   marginVertical={sizes.s}
                   marginHorizontal={sizes.sm}
-                  // onPress={onSignUpPress}
                   onPress={onPressVerify}
                 >
                   <Text bold primary transform="uppercase">
-                    Sign up
+                    Submit
                   </Text>
                 </Button>
+                <HelperText type="error" visible={true}>
+                  {errorMessage}
+                </HelperText>
               </Block>
             </Block>
           </Block>
