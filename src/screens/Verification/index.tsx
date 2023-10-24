@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSignUp } from '@clerk/clerk-expo';
-import { SignUpScreenProps } from '@/routes/types';
+import { VerificationScreenProps } from '@/routes/types';
 import { Platform } from 'react-native';
 import Block from '@/components/Block';
 import Image from '@/components/Image';
@@ -11,7 +11,12 @@ import FormTextInput from '@/components/FormTextInput';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
 import { HelperText } from 'react-native-paper';
-import { useForm, Control, UseFormRegister, FieldValues } from 'react-hook-form';
+import {
+  useForm,
+  Control,
+  UseFormRegister,
+  FieldValues,
+} from 'react-hook-form';
 import Loading from '@/components/Loading';
 
 const isAndroid = Platform.OS === 'android';
@@ -20,7 +25,7 @@ const signUpValidationSchema = object().shape({
   code: string().required('Enter contact number.'),
 });
 
-function Verification({ navigation }: SignUpScreenProps) {
+function Verification({ navigation }: VerificationScreenProps) {
   const { isLoaded, signUp, setActive } = useSignUp();
   const { assets, colors, sizes } = useTheme();
   const {
