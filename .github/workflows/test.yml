@@ -26,9 +26,6 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: './yarn.lock'
      
-                        
-      - name: GitHub Action for Yarn
-        uses: Borales/actions-yarn@v4.2.0
 
       - name: Install Dependencies
         uses: Borales/actions-yarn@v4.2.0
