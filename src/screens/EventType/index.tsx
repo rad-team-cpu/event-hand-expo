@@ -23,7 +23,6 @@ const EventType = (props: EventTypeScreenProps) => {
           'Wedding',
           'Birthday',
           'Baptismal',
-          'Graduation',
           'Reunion',
           'Corporate',
         ].map((label) => (
