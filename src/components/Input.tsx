@@ -152,7 +152,7 @@ const Input = ({ mode, iprops }: CustomInputProps) => {
         <TextInput
           {...inputID}
           {...iprops}
-          secureTextEntry={mode == 'password' && secureTextEntry ? true : false}
+          secureTextEntry={mode == 'password' && !secureTextEntry}
           style={inputStyles}
           editable={!disabled}
           placeholderTextColor={inputColor}
@@ -161,7 +161,7 @@ const Input = ({ mode, iprops }: CustomInputProps) => {
         />
         {mode == 'password' && (
           <MaterialCommunityIcons
-            name={secureTextEntry ? 'eye' : 'eye-off'}
+            name={secureTextEntry ? 'eye-off' : 'eye'}
             size={24}
             color="#aaa"
             style={{
