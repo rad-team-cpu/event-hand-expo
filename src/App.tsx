@@ -1,8 +1,7 @@
 import React from 'react';
-import { Provider } from 'react-native-paper';
+import { PaperProvider } from 'react-native-paper';
 import Routes from '@/routes';
 import { ClerkProvider } from '@clerk/clerk-expo';
-import Constants from 'expo-constants';
 import SecureStore from 'expo-secure-store';
 
 const tokenCache = {
@@ -23,12 +22,14 @@ const tokenCache = {
 };
 function App() {
   return (
-    <ClerkProvider
-      // tokenCache={tokenCache}
-      publishableKey={`${process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}`}
-    >
-      <Routes />
-    </ClerkProvider>
+    <PaperProvider>
+      <ClerkProvider
+        // tokenCache={tokenCache}
+        publishableKey={`${process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}`}
+      >
+        <Routes />
+      </ClerkProvider>
+    </PaperProvider>
   );
 }
 
