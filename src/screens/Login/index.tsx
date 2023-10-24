@@ -60,6 +60,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
     setLoading(true);
     const { emailAddress, password } = input;
     await submit(emailAddress, password).catch((err) => {
+      setLoading(false)
       switch (err.status) {
         case 400:
           setErrorMessage('SignUp failed, please try again');

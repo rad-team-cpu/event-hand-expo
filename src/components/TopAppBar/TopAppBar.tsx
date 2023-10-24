@@ -25,7 +25,7 @@ const TopAppBar = (props: NativeStackHeaderProps) => {
     }
 
     setLoading(true);
-    await signOut();
+    await signOut().catch(() => setLoading(false));
   };
 
   return (
