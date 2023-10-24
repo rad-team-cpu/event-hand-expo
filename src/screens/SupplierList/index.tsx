@@ -111,7 +111,6 @@ const VENUE: IArticle[] = [
 
 
 const SupplierList = () => {
-  // const data = useData();
   const [selected, setSelected] = useState<ICategory>();
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [categories, setCategories] = useState<ICategory[]>([]);

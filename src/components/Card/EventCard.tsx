@@ -20,7 +20,7 @@ interface EventCardProps {
 
 const EventCard = (props: EventCardProps) => {
   const { key, name, eventType } = props;
-  const { assets, colors, gradients, sizes, icons } = useTheme();
+  const { assets, gradients, sizes, icons } = useTheme();
   const navigation = useNavigation<DashboardScreenNavigationProp>();
 
   return (
