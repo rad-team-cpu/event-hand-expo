@@ -120,6 +120,22 @@ const ClientProfile = (props: ClientProfileScreenProps) => {
                     <Text>09566661733</Text>
                 </Block>
             </Block>
+            <Block
+              row
+              blur
+              flex={0}
+              intensity={100}
+              radius={sizes.sm}
+              overflow="hidden"
+              tint={colors.blurTint}
+              justify="space-evenly"
+              paddingVertical={sizes.sm}
+              renderToHardwareTextureAndroid>
+                <Block align="flex-start" marginLeft={sizes.sm}>
+                    <Text h5>Birthday</Text>
+                    <Text>06/24/2000</Text>
+                </Block>
+            </Block>
           </Block>
         </Block>
       </Block>
