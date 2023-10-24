@@ -36,7 +36,7 @@ export interface IArticle {
   description?: string;
   category?: ICategory;
   image?: string;
-  location?: ILocation;
+  location?: string;
   rating?: number;
   user?: IUser;
   offers?: IProduct[];

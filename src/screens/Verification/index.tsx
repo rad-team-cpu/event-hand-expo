@@ -13,8 +13,6 @@ import { object, string } from 'yup';
 import { HelperText } from 'react-native-paper';
 import { useForm } from 'react-hook-form';
 
-const isAndroid = Platform.OS === 'android';
-
 const signUpValidationSchema = object().shape({
   code: string().required('Enter contact number.'),
 });
@@ -127,7 +125,6 @@ function Verification({ navigation }: SignUpScreenProps) {
         </Block>
         <Block
           keyboard
-          behavior={!isAndroid ? 'padding' : 'height'}
           marginTop={-(sizes.height * 0.2 - sizes.l)}
         >
           <Block
@@ -157,7 +154,6 @@ function Verification({ navigation }: SignUpScreenProps) {
                 <Button
                   primary
                   outlined
-                  shadow={!isAndroid}
                   marginVertical={sizes.s}
                   marginHorizontal={sizes.sm}
                   // onPress={onSignUpPress}

@@ -57,8 +57,7 @@ const ClientProfile = (props: ClientProfileScreenProps) => {
               <Image
                 width={64}
                 height={64}
-                marginBottom={sizes.sm}
-              />
+                marginBottom={sizes.sm} source={0}              />
               <Text h3 center white>
                 {/* {user?.name} */}
                 Rasheen Rabino

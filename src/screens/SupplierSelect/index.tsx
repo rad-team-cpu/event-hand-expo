@@ -280,7 +280,7 @@ const SupplierSelect = (props: SupplierSelectScreenProps) => {
         </View>
       </View>
       <Button
-        onPress={() => navigation.navigate('Checklist')}
+        onPress={() => navigation.navigate('SupplierList')}
         disabled={disableButton}
         gradient={gradients.primary}
         margin={sizes.md}

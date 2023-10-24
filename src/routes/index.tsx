@@ -7,7 +7,6 @@ import Dashboard from '@/screens/Dashboard';
 import Welcome from '@/screens/Welcome';
 import Login from '@/screens/Login';
 import TopAppBar from '@/components/TopAppBar/TopAppBar';
-import Checklist from '@/screens/Checklist';
 import SignUp from '@/screens/SignUp';
 import SupplierSelect from '@/screens/SupplierSelect';
 import SupplierList from '@/screens/SupplierList/SupplierList';
@@ -36,21 +35,34 @@ const Routes = () => {
             component={ClientProfile}
             options={{ headerShown: false }}
           />
-          <MainStack.Screen name="EventType" component={EventType} />
+          <MainStack.Screen 
+            name="EventType" 
+            component={EventType} 
+            options={{ header: TopAppBar }}
+          />
           <MainStack.Screen
             name="EventDateSelect"
             component={EventDateSelect}
+            options={{ header: TopAppBar }}
           />
           <MainStack.Screen
             name="EventBudgetInput"
             component={EventBudgetInput}
+            options={{ header: TopAppBar }}
           />
-          <MainStack.Screen name="SupplierSelect" component={SupplierSelect} />
-          <MainStack.Screen name="Checklist" component={Checklist} />
+          <MainStack.Screen 
+            name="SupplierSelect" 
+            component={SupplierSelect} 
+          />
           <MainStack.Screen
             name="SupplierList"
             component={SupplierList}
-            options={{ header: SupplierListAppBar }}
+            options={{ header: TopAppBar }}
+          />
+          <MainStack.Screen
+            name="Profile"
+            component={Profile}
+            options={{ headerShown: false }}
           />
         </MainStack.Navigator>
       </SignedIn>

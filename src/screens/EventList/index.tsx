@@ -6,6 +6,7 @@ import {
   EventListScreenProps,
 } from '@/routes/types';
 import { useNavigation } from '@react-navigation/native';
+import Text from '@/components/Text';
 import EventCards from '@/components/Card/EventCard';
 
 // const EventList = (props: EventListScreenProps) => {
@@ -36,9 +37,9 @@ import Input from '@/components/Input';
 import useTheme from '@/core/theme';
 
 enum Event {
-  Wedding,
-  Birthday,
-  Baptismal,
+  Wedding = "Wedding",
+  Birthday = "Birthday",
+  Baptismal = "Baptismal",
 }
 
 const data = [
@@ -66,14 +67,19 @@ const EventList = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
-        <ScrollView>
-          <Block color={colors.card} flex={0} padding={sizes.padding}>
+      <Block color={colors.card} flex={0} padding={sizes.padding}>
             <Input
               mode="text"
               iprops={{ search: true, placeholder: 'Search' }}
             />
           </Block>
-          {EventCards(data)}
+        <ScrollView>
+          {/* {EventCards(data)} */}
+          <Text 
+           p
+           align='center'
+           margin={sizes.sm}
+           > You have no events. </Text>
         </ScrollView>
       </View>
 

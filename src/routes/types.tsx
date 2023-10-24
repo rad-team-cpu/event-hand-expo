@@ -20,7 +20,6 @@ type ScreenPropsList = {
   EventType: undefined;
   EventBudgetInput: undefined;
   SupplierSelect: undefined;
-  Checklist: undefined;
   SupplierList: undefined;
 };
 
@@ -70,10 +69,6 @@ type SupplierSelectScreenProps = NativeStackScreenProps<
   'SupplierSelect'
 >;
 
-type ChecklistScreenProps = NativeStackScreenProps<
-  ScreenPropsList,
-  'Checklist'
->;
 
 type SupplierListScreenProps = NativeStackScreenProps<
   ScreenPropsList,
@@ -118,7 +113,6 @@ export {
   EventTypeScreenProps,
   EventBudgetInputScreenProps,
   SupplierSelectScreenProps,
-  ChecklistScreenProps,
   SupplierListScreenProps,
   DashboardTabScreenPropsList,
   InboxScreenProps,

@@ -385,7 +385,7 @@ export const ARTICLES: IArticle[] = [
     options: ARTICLE_OPTIONS,
     image:
       'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?fit=crop&w=450&q=80',
-    location: LOCATIONS[0],
+    location: '',
     rating: 4.9,
     timestamp: dayjs().unix(),
   },
@@ -396,7 +396,7 @@ export const ARTICLES: IArticle[] = [
     options: ARTICLE_OPTIONS,
     image:
       'https://images.unsplash.com/photo-1529154036614-a60975f5c760?fit=crop&w=450&q=80',
-    location: LOCATIONS[1],
+    location: '',
     rating: 4.5,
     timestamp: dayjs().unix(),
   },
@@ -408,7 +408,7 @@ export const ARTICLES: IArticle[] = [
     options: ARTICLE_OPTIONS,
     image:
       'https://images.unsplash.com/photo-1486299267070-83823f5448dd?fit=crop&w=450&q=80',
-    location: LOCATIONS[2],
+    location: '',
     rating: 4.8,
     timestamp: dayjs().unix(),
   },
@@ -424,7 +424,7 @@ export const RECOMMENDATIONS: IArticle[] = [
     options: ARTICLE_OPTIONS,
     image:
       'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?fit=crop&w=450&q=80',
-    location: LOCATIONS[0],
+    location: '',
     rating: 4.9,
     offers: OFFERS,
     timestamp: dayjs().unix(),
@@ -436,7 +436,7 @@ export const RECOMMENDATIONS: IArticle[] = [
     options: ARTICLE_OPTIONS,
     image:
       'https://images.unsplash.com/photo-1529154036614-a60975f5c760?fit=crop&w=450&q=80',
-    location: LOCATIONS[1],
+    location: '',
     rating: 4.5,
     offers: OFFERS,
     timestamp: dayjs().unix(),
@@ -449,7 +449,7 @@ export const RECOMMENDATIONS: IArticle[] = [
     options: ARTICLE_OPTIONS,
     image:
       'https://images.unsplash.com/photo-1486299267070-83823f5448dd?fit=crop&w=450&q=80',
-    location: LOCATIONS[2],
+    location: '',
     rating: 4.8,
     offers: OFFERS,
     timestamp: dayjs().unix(),
